@@ -11,7 +11,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&family=Noto+Serif+SC:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap">
 <style>
 /* Layout: the page is the gallery wall. Each work hangs on its own stretch of wall.
    Moving the pointer left changes where you stand (front → side, near → far, four → one).
@@ -81,24 +81,41 @@ main{display:flex;flex-direction:column;gap:104px;padding-block:40px 140px}
 .cap p{margin:0;max-width:34em;font-size:17px;line-height:1.9}
 .cap p.how{color:var(--ink-soft);font-size:15px}
 @media (max-width:720px){.stage{height:70vh}}
+.lang{display:flex;gap:4px}
+.lang button{font:inherit;font-size:13px;letter-spacing:.14em;color:var(--ink-soft);background:none;border:0;padding:6px 8px;cursor:pointer}
+.lang button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+.lang button:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+[data-l]{display:none}
+html[data-lang="ja"] [data-l="ja"], html[data-lang="en"] [data-l="en"], html[data-lang="zh"] [data-l="zh"]{display:revert}
+html[data-lang="zh"]{--f-display:"Noto Serif SC","Songti SC","SimSun",serif;--f-text:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
 </style>
-
 </head>
 <body>
 <div class="wrap">
   <header>
     <a class="mark" href="home.html" aria-label="D.sign"><span class="kd">D</span><span class="kp">.</span>sign</a>
     <span class="line">Images about looking and the trouble with wanting.</span>
+    <nav class="lang" aria-label="言語 / Language / 语言">
+      <button type="button" id="l-ja" data-set="ja" aria-pressed="true">日本語</button>
+      <button type="button" id="l-en" data-set="en" aria-pressed="false">English</button>
+      <button type="button" id="l-zh" data-set="zh" aria-pressed="false" lang="zh-Hans">中文</button>
+    </nav>
   </header>
   <section class="period">
     <h1>2021–2023</h1>
-    <p>UVインクジェットで「絵画」を作る。帯と着物に刷る。コロナ禍で、高級な着物や帯がリサイクルショップに大量に出ていた。</p>
-    <p class="note">カーソルを左右に動かすと立つ位置が変わります（スマホは横にスワイプ）。クリックで近づき、もう一度クリックで次の細部、最後に離れます。</p>
+    <p data-l="ja">UVインクジェットで「絵画」を作る。帯と着物に刷る。コロナ禍で、高級な着物や帯がリサイクルショップに大量に出ていた。</p>
+    <p data-l="en" lang="en">"Paintings" made with UV inkjet, printed on obi and kimono. During the pandemic, fine kimono and obi were flooding into secondhand shops.</p>
+    <p data-l="zh" lang="zh-Hans">用UV喷墨制作“绘画”，印在腰带与和服上。疫情期间，大量高级和服与腰带流入了二手店。</p>
+    <p class="note" data-l="ja">カーソルを左右に動かすと立つ位置が変わります（スマホは横にスワイプ）。クリックで近づき、もう一度クリックで次の細部、最後に離れます。</p>
+    <p class="note" data-l="en" lang="en">Move the pointer left and right to change where you stand (swipe sideways on a phone). Click to walk up close, click again for the next detail, and once more to step back.</p>
+    <p class="note" data-l="zh" lang="zh-Hans">左右移动光标，改变你站立的位置（手机上左右滑动）。点击走近，再次点击看下一处细部，最后一次点击后退。</p>
   </section>
   <main id="works"></main>
 </div>
 
 <script>
+const TR = {"sorewa": [["Velveteen with a fukuro-obi laid on it; the whole was scanned, then printed without covering all of the obi's pattern. The phoenix and flowers belong to the obi."], ["在平绒上贴上袋带，整体扫描后，不完全覆盖腰带的花纹进行印刷。凤凰与花是腰带本身的图案。"]], "tsunagari": [["A fukuro-obi laid on velveteen, almost buried under the print. The image on the verge of disappearing is intended."], ["在平绒上贴上袋带，几乎被印刷完全覆盖。图像近乎消失，是有意为之。"]], "nagare": [["A fukuro-obi laid on velveteen, almost buried under the print. The image on the verge of disappearing is intended."], ["在平绒上贴上袋带，几乎被印刷完全覆盖。图像近乎消失，是有意为之。"]], "dap": [["A whole Oshima-tsumugi kimono laid on a velvet-covered panel and printed directly with UV inkjet. The frame is part of the work.", "THE STRENGTH, THE FOOL, THE DEATH and THE HUNGED, joined and recomposed. Scenes and figures built in 3DCG, brushwork added in Corel Painter, composited in Photoshop. People in the society of 2022, each living clumsily in their own way."], ["将一整件大岛绸和服贴在覆有天鹅绒的板上，用UV喷墨直接印刷。连同画框在内是一件作品。", "将 THE STRENGTH／THE FOOL／THE DEATH／THE HUNGED 四张连接并重新构成。以3DCG搭建场景与人物，用Corel Painter加入笔触，在Photoshop中合成。2022年的社会里，各自笨拙地活着的人们。"]], "raijin-fujin": [["RAIJIN and FUJIN, two works that together make KORIN. Printed on real obi."], ["RAIJIN 与 FUJIN 两件构成 KORIN。印在真正的腰带上。"]], "street": [["An acrylic box. The real obi is at the back and can be seen only from the side."], ["亚克力盒。真正的腰带在深处，只能从侧面看见。"]], "sp1": [["A painting in oils on obi, 3D-scanned and processed digitally. The black shape is a selfie. The hand-painted picture itself is not shown."], ["用油画颜料画在腰带上的画被立体扫描，并经过数字处理。黑色的形状是自拍照。手绘的画本身不展出。"]], "sp2": [["Obi 3D-scanned and recolored, with a 3D figure placed on it. Nothing real is there, yet it looks like obi."], ["将腰带立体扫描并改变颜色，再放上3D人物。没有真物，却看起来像腰带。"]], "kaze": [["The real obi is at the back, seen through a hole cut in the paper, behind acrylic."], ["真正的腰带在深处，透过纸上挖开的孔，隔着亚克力可以看见。"]], "nagamu": [["The real obi is at the back, seen through a hole cut in the paper, behind acrylic."], ["真正的腰带在深处，透过纸上挖开的孔，隔着亚克力可以看见。"]]};
+const ENDS = {'横':['Side','侧面'],'正面':['Front','正面'],'離れる':['Step back','退后'],'近く':['Close','近处'],'1枚':['One','一件'],'4枚':['Four','四张']};
 const WORKS = [
   { id:'sorewa', title:'それはあった、今は。', year:'2021',
     text:['別珍に袋帯を貼り、全体をスキャンして、帯の柄を全部は埋めずに刷った。鳳凰と花は帯の柄。'],
@@ -172,12 +189,15 @@ const WORKS = [
       const walk = el('div','walk');
       range = el('input'); range.type='range'; range.min=0; range.max=1000; range.value=0; range.id='walk-'+W.id;
       range.setAttribute('aria-label', `${W.title}：立つ位置`);
-      walk.append(el('span',null,W.ends[0]), range, el('span',null,W.ends[1]));
+      const endLabel = j => { const w = el('span'); const v = W.ends[j]; w.innerHTML = `<span data-l="ja">${v}</span><span data-l="en" lang="en">${ENDS[v][0]}</span><span data-l="zh" lang="zh-Hans">${ENDS[v][1]}</span>`; return w; };
+      walk.append(endLabel(0), range, endLabel(1));
       sec.append(walk);
     }
     const cap = el('div','cap');
     const h2 = el('h2',null); h2.textContent = W.title; const sm = el('small'); sm.textContent = W.year; h2.append(sm);
-    const txt = el('div','txt'); W.text.forEach((t,i) => { const p = el('p', i ? 'how' : null); p.textContent = t; txt.append(p); });
+    const txt = el('div','txt');
+    const langs = {ja:W.text, en:(TR[W.id]||[[],[]])[0], zh:(TR[W.id]||[[],[]])[1]};
+    for (const [l, arr] of Object.entries(langs)) arr.forEach((t,i) => { const p = el('p', i ? 'how' : null); p.dataset.l = l; if (l !== 'ja') p.lang = l === 'zh' ? 'zh-Hans' : 'en'; p.textContent = t; txt.append(p); });
     cap.append(h2, txt); sec.append(cap);
     host.append(sec);
 
@@ -314,6 +334,21 @@ const WORKS = [
   requestAnimationFrame(frame);
 })();
 </script>
-
+<script>
+(() => {
+  const root = document.documentElement;
+  let stored = null;
+  try { stored = localStorage.getItem('dsign-lang'); } catch(e) {}
+  const nav = (navigator.language || 'ja').toLowerCase();
+  const lang = ['ja','en','zh'].includes(stored) ? stored : (nav.startsWith('ja') ? 'ja' : nav.startsWith('zh') ? 'zh' : 'en');
+  const set = l => {
+    root.dataset.lang = l; root.lang = l === 'zh' ? 'zh-Hans' : l;
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.set === l)));
+    try { localStorage.setItem('dsign-lang', l); } catch(e) {}
+  };
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => set(b.dataset.set)));
+  set(lang);
+})();
+</script>
 </body>
 </html>
