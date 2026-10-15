@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}.mark .kd{margin-right:-.09em}
+.mark .kp{margin-right:-.04em}
+</style>
+<title>2021–2023 — D.sign</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<style>
+/* Layout: the page is the gallery wall. Each work hangs on its own stretch of wall.
+   Moving the pointer left changes where you stand (front → side, near → far, four → one).
+   Clicking walks up close; up close the whole is gone. */
+:root{
+  --wall:#ebe9e6;
+  --ink:#24211d;
+  --ink-soft:#6c665e;
+  --rule:#c9c4bc;
+  --mark:#24211d;
+  --f-display:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-text:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{background:var(--wall);color:var(--ink)}
+body{font-family:var(--f-text);font-size:16px;line-height:1.85;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));}
+.wrap{max-width:1280px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:28px 8px}
+.mark{font-family:"EB Garamond","Garamond",serif;font-weight:500;font-size:25px;letter-spacing:.02em;color:var(--ink);text-decoration:none}
+.line{font-family:var(--f-display);font-size:15px;color:var(--ink-soft);text-wrap:balance}
+.period{padding-block:56px 8px;display:grid;gap:10px;justify-items:center}
+.period h1{text-align:center}
+.period p{justify-self:center;width:min(100%,38em);text-align:left}
+.period h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(28px,4vw,44px);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.period p{margin:0}
+.period p{font-size:17px}
+.note{color:var(--ink-soft);font-size:14px !important;letter-spacing:.03em}
+main{display:flex;flex-direction:column;gap:104px;padding-block:40px 140px}
+
+.work{display:grid;gap:16px}
+.stage{position:relative;height:min(82vh,960px);min-height:420px;background:var(--wall-w,var(--wall));
+  overflow:hidden;touch-action:pan-y;transition:background-color .4s;cursor:default}
+.stage.c-walk{cursor:ew-resize}
+.stage.c-in{cursor:zoom-in}
+.stage.c-out{cursor:zoom-out}
+.layer{position:absolute;inset:0;pointer-events:none}
+.front{display:flex;align-items:center;justify-content:center}
+.row{display:flex;align-items:center;gap:var(--gap,24px);will-change:transform}
+.plane{flex:none;will-change:transform,opacity;box-shadow:0 18px 40px -24px rgba(36,33,29,.45)}
+.plane img{display:block;width:100%;height:100%;user-select:none;-webkit-user-drag:none}
+.photo{opacity:0}
+.photo img{position:absolute;inset:4% 0;width:100%;height:92%;object-fit:contain;
+  -webkit-mask-image:radial-gradient(ellipse 72% 78% at 50% 50%,#000 62%,transparent 100%);
+          mask-image:radial-gradient(ellipse 72% 78% at 50% 50%,#000 62%,transparent 100%)}
+.photo.plain img{-webkit-mask-image:none;mask-image:none}
+.detail{opacity:0;background:var(--wall-w,var(--wall))}
+.detail img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.detail .count{position:absolute;right:calc(14px + env(safe-area-inset-right,0px));bottom:12px;font-size:11px;letter-spacing:.18em;
+  color:#f3f1ee;mix-blend-mode:difference;font-variant-numeric:tabular-nums}
+
+.walk{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;
+  font-size:13px;letter-spacing:.16em;color:var(--ink-soft)}
+.walk input{appearance:none;-webkit-appearance:none;width:100%;height:24px;background:transparent;margin:0;direction:rtl}
+.walk input::-webkit-slider-runnable-track{height:1px;background:var(--rule)}
+.walk input::-moz-range-track{height:1px;background:var(--rule)}
+.walk input::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;border-radius:50%;background:var(--mark);margin-top:-4px}
+.walk input::-moz-range-thumb{width:9px;height:9px;border:0;border-radius:50%;background:var(--mark)}
+.walk input:focus-visible{outline:1px solid var(--ink);outline-offset:4px}
+
+.cap{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;justify-items:center;text-align:center;
+  justify-self:center;width:min(100%,640px)}
+.cap h2{margin:0;font-family:var(--f-display);font-weight:500;font-size:clamp(24px,2.6vw,33px);letter-spacing:.02em;text-wrap:balance}
+.cap h2 small{display:block;font-family:var(--f-text);font-size:12px;letter-spacing:.14em;color:var(--ink-soft);font-weight:400;margin-top:4px;font-variant-numeric:tabular-nums}
+.cap .txt{display:grid;gap:6px;min-width:0;width:fit-content;max-width:100%;text-align:left}
+.cap p{margin:0;max-width:34em;font-size:17px;line-height:1.9}
+.cap p.how{color:var(--ink-soft);font-size:15px}
+@media (max-width:720px){.stage{height:70vh}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="mark" href="home.html" aria-label="D.sign"><span class="kd">D</span><span class="kp">.</span>sign</a>
+    <span class="line">Images about looking and the trouble with wanting.</span>
+  </header>
+  <section class="period">
+    <h1>2021–2023</h1>
+    <p>UVインクジェットで「絵画」を作る。帯と着物に刷る。コロナ禍で、高級な着物や帯がリサイクルショップに大量に出ていた。</p>
+    <p class="note">カーソルを左右に動かすと立つ位置が変わります（スマホは横にスワイプ）。クリックで近づき、もう一度クリックで次の細部、最後に離れます。</p>
+  </section>
+  <main id="works"></main>
+</div>
+
+<script>
+const WORKS = [
+  { id:'sorewa', title:'それはあった、今は。', year:'2021',
+    text:['別珍に袋帯を貼り、全体をスキャンして、帯の柄を全部は埋めずに刷った。鳳凰と花は帯の柄。'],
+    front:[{k:'sorewa',w:1309,h:2400,d:[{k:'sorewa-d1'}]}] },
+  { id:'tsunagari', title:'つながりの中でこそ', year:'2021',
+    text:['別珍に袋帯を貼り、刷りでほぼ埋める。像が消えかけているのは意図。'],
+    front:[{k:'tsunagari',w:2400,h:1576,d:[{k:'nagare-d2'}]}] },
+  { id:'nagare', title:'流れ着いた先に', year:'2021',
+    text:['別珍に袋帯を貼り、刷りでほぼ埋める。像が消えかけているのは意図。'],
+    front:[{k:'nagare',w:2400,h:1574,d:[{k:'nagare-d1'}]}] },
+  { id:'dap', title:'DEATH AND PEACE', year:'2022', mode:'assemble', ends:['1枚','4枚'],
+    text:['大島紬の着物一着を、ベルベットを貼ったパネルに貼り、UVインクジェットで直接刷る。額も含めて一体の作品。',
+          'THE STRENGTH／THE FOOL／THE DEATH／THE HUNGED の4枚をつなげて構成し直した。3DCGでシーンと人物を組み、Corel Painterでタッチを入れ、Photoshopで合成。2022年の社会を、それぞれ不器用に生きる人物。'],
+    front:[{k:'strength',w:1551,h:1800,d:[{k:'strength-d1'}]},{k:'fool',w:1540,h:1800,d:[{k:'fool-d1'}]},
+           {k:'death',w:1540,h:1800,d:[{k:'death-d1'}]},{k:'hunged',w:1542,h:1800,d:[{k:'hunged-d1'}]}],
+    photo:{k:'dap',w:1098,h:1280,plain:true,d:[{k:'dap-d1'},{k:'dap-d2'}]} },
+  { id:'raijin-fujin', title:'KORIN', year:'2023', mode:'step', ends:['離れる','近く'], wall:'#d8d1c8',
+    text:['RAIJIN と FUJIN の2点で KORIN。本物の帯の上に刷る。'],
+    front:[{k:'raijin',w:2000,h:1667,d:[{k:'raijin-d1'}]},{k:'fujin',w:2000,h:1669,d:[{k:'fujin-d1'}]}],
+    photo:{k:'korin',w:2600,h:1317} },
+  { id:'street', title:'street at night', year:'2023', mode:'side', ends:['横','正面'], wall:'#e6d6d2',
+    text:['アクリルの箱。本物の帯は奥にあり、横からだけ見える。'],
+    front:[{k:'street-front',w:2400,h:2392}], photo:{k:'street-side'} },
+  { id:'sp1', title:'Self-portrait No1', year:'2023',
+    text:['帯の上に油絵具で描いた絵を立体スキャンし、デジタルで後処理。黒い形は自撮り写真。肉筆の絵そのものは展示しない。'],
+    front:[{k:'sp1',w:1981,h:2400,d:[{k:'sp1-d1'}]}] },
+  { id:'sp2', title:'Self-portrait No2', year:'2023',
+    text:['帯を立体スキャンして色を変え、3Dの人物を乗せる。本物はないが、帯に見える。'],
+    front:[{k:'sp2',w:2400,h:2388,d:[{k:'sp2-d1'}]}] },
+  { id:'kaze', title:'カゼトイシ', year:'2023', mode:'side', ends:['横','正面'], wall:'#efebe8',
+    text:['本物の帯は奥にある。紙をくり抜いた穴から、アクリル越しに見える。'],
+    front:[{k:'kaze-front',w:1398,h:2400}], photo:{k:'kaze-side'} },
+  { id:'nagamu', title:'眺むれば', year:'2023', mode:'side', ends:['横','正面'], wall:'#e8e7eb',
+    text:['本物の帯は奥にある。紙をくり抜いた穴から、アクリル越しに見える。'],
+    front:[{k:'nagamu-front',w:1406,h:2400}], photo:{k:'nagamu-side'} },
+];
+
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v,a,b) => Math.min(b,Math.max(a,v));
+  const smooth = (a,b,x) => { const t = clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
+  const src = k => `img/${k}.jpg`;
+  const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+  const host = document.getElementById('works');
+  const items = [];
+
+  WORKS.forEach(W => {
+    const mode = W.mode || 'whole';
+    const sec = el('section','work'); sec.id = W.id;
+    if (W.wall) sec.style.setProperty('--wall-w', W.wall);
+    const stage = el('div','stage'); stage.setAttribute('aria-label', W.title);
+    let photo = null;
+    if (W.photo){
+      photo = el('div','layer photo' + (W.photo.plain ? ' plain':''));
+      photo.append(Object.assign(new Image(), {src:src(W.photo.k), alt:`${W.title}（${W.ends ? W.ends[0] : ''}）`, decoding:'async', loading:'lazy'}));
+      stage.append(photo);
+    }
+    const front = el('div','layer front'); const row = el('div','row'); front.append(row);
+    const planes = W.front.map(f => {
+      const pl = el('div','plane');
+      pl.append(Object.assign(new Image(), {src:src(f.k), alt:W.title, decoding:'async', loading:'lazy'}));
+      row.append(pl); return {el:pl, ...f};
+    });
+    stage.append(front);
+    const detail = el('div','layer detail'); const dimg = new Image(); dimg.alt = `${W.title}、細部`; const count = el('span','count');
+    detail.append(dimg, count); stage.append(detail);
+    sec.append(stage);
+
+    let range = null;
+    if (mode !== 'whole'){
+      const walk = el('div','walk');
+      range = el('input'); range.type='range'; range.min=0; range.max=1000; range.value=0; range.id='walk-'+W.id;
+      range.setAttribute('aria-label', `${W.title}：立つ位置`);
+      walk.append(el('span',null,W.ends[0]), range, el('span',null,W.ends[1]));
+      sec.append(walk);
+    }
+    const cap = el('div','cap');
+    const h2 = el('h2',null); h2.textContent = W.title; const sm = el('small'); sm.textContent = W.year; h2.append(sm);
+    const txt = el('div','txt'); W.text.forEach((t,i) => { const p = el('p', i ? 'how' : null); p.textContent = t; txt.append(p); });
+    cap.append(h2, txt); sec.append(cap);
+    host.append(sec);
+
+    items.push({W, mode, sec, stage, row, planes, photo, detail, dimg, count, range,
+      p:0, tp:0, n:0, tn:0, z:1, tz:1, ox:.5, oy:.5, tox:.5, toy:.5,
+      list:null, li:0, zoomOnly:false, touch:false, visible:true, offs:[]});
+  });
+
+  function layout(it){
+    const r = it.stage.getBoundingClientRect();
+    const narrow = r.width < 600;
+    const pad = narrow ? .88 : .8;
+    const gap = it.planes.length > 1 ? (narrow ? 8 : 28) : 0;
+    it.row.style.setProperty('--gap', gap+'px');
+    const sumAr = it.planes.reduce((a,p) => a + p.w/p.h, 0);
+    const h = Math.min(r.height*pad, (r.width*pad - gap*(it.planes.length-1)) / sumAr);
+    it.planes.forEach(p => { p.el.style.height = h+'px'; p.el.style.width = (h*p.w/p.h)+'px'; });
+    it.baseK = h / it.planes[0].h;
+    // offsets of each plane centre from the row centre, for assembling
+    let x = 0; const total = h*sumAr + gap*(it.planes.length-1);
+    it.offs = it.planes.map(p => { const w = h*p.w/p.h; const c = x + w/2 - total/2; x += w + gap; return c; });
+  }
+  const relayout = () => items.forEach(layout);
+  relayout(); addEventListener('resize', relayout);
+
+  const io = new IntersectionObserver(es => es.forEach(e => { const it = items.find(i => i.stage === e.target); if (it) it.visible = e.isIntersecting; }), {rootMargin:'200px'});
+  items.forEach(it => io.observe(it.stage));
+
+  function showDetail(it){
+    const d = it.list[it.li];
+    it.dimg.src = src(d.k);
+    it.count.textContent = it.list.length > 1 ? `${it.li+1} / ${it.list.length}` : '';
+  }
+  function approach(it, plane, x, y){
+    if (plane && plane.d && plane.d.length){ it.list = plane.d; it.li = 0; showDetail(it); it.tn = 1; it.zoomOnly = false; }
+    else { it.zoomOnly = true; it.tz = clamp(1/it.baseK*.9, 2.2, 6); it.tox = x; it.toy = y; }
+  }
+  function step(it){
+    if (it.zoomOnly){ it.zoomOnly = false; it.tz = 1; it.tox = it.toy = .5; return; }
+    if (it.li < it.list.length - 1){ it.li++; showDetail(it); }
+    else { it.tn = 0; it.list = null; }
+  }
+  const isNear = it => it.tn > 0 || it.zoomOnly;
+
+  function planeAt(it, cx){
+    let best = null, bd = 1e9;
+    it.planes.forEach(p => { const r = p.el.getBoundingClientRect(); const d = Math.abs(cx - (r.left + r.width/2)); if (d < bd){ bd = d; best = p; } });
+    return best;
+  }
+
+  function cursor(it){
+    const c = it.stage.classList;
+    c.remove('c-walk','c-in','c-out');
+    if (isNear(it)) c.add('c-out');
+    else if (it.p < .08 || (it.mode === 'assemble' && it.p > .92)) c.add('c-in');
+    else c.add('c-walk');
+  }
+
+  items.forEach(it => {
+    const st = it.stage;
+    let tx = null, tp0 = 0, moved = false;
+    st.addEventListener('pointerdown', e => { tx = e.clientX; tp0 = it.tp; moved = false; });
+    st.addEventListener('pointermove', e => {
+      const r = st.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width, y = (e.clientY - r.top)/r.height;
+      if (tx != null && Math.abs(e.clientX - tx) > 6) moved = true;
+      if (isNear(it)){ it.tox = clamp(x,0,1); it.toy = clamp(y,0,1); cursor(it); return; }
+      if (!it.range){ cursor(it); return; }
+      if (e.pointerType === 'mouse'){
+        it.tp = clamp((0.72 - x)/0.56, 0, 1);
+      } else if (tx != null){
+        it.tp = clamp(tp0 + (e.clientX - tx) / st.clientWidth * 2.7, 0, 1); it.touch = true;
+      }
+      it.range.value = Math.round(it.tp*1000);
+      cursor(it);
+    });
+    st.addEventListener('pointerup', e => {
+      const r = st.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width, y = (e.clientY - r.top)/r.height;
+      if (!moved){
+        if (isNear(it)) step(it);
+        else if (it.mode === 'assemble' && it.p > .92) approach(it, it.W.photo, x, y);
+        else if (it.p < .08) approach(it, planeAt(it, e.clientX), x, y);
+        cursor(it);
+      }
+      tx = null;
+    });
+    st.addEventListener('pointerleave', () => { tx = null; });
+    if (it.range) it.range.addEventListener('input', () => { if (isNear(it)){ it.tn = 0; it.list = null; it.zoomOnly = false; it.tz = 1; } it.tp = it.range.value/1000; });
+    cursor(it);
+  });
+
+  function frame(){
+    items.forEach(it => {
+      if (!it.visible) return;
+      const k = reduce ? 1 : (it.touch ? .2 : .09), k2 = reduce ? 1 : .12;
+      it.p += (it.tp - it.p)*k; it.n += (it.tn - it.n)*k2; it.z += (it.tz - it.z)*k2;
+      it.ox += (it.tox - it.ox)*k2; it.oy += (it.toy - it.oy)*k2;
+      const p = it.p, n = it.n;
+      let rowT = '', fo = 1, po = 0, ps = 1;
+      if (it.mode === 'side'){
+        rowT = `perspective(1800px) translateX(${-p*8}%) rotateY(${p*30}deg)`;
+        fo = 1 - smooth(.42,.82,p); po = smooth(.38,.8,p); ps = 1.06 - .06*po;
+      } else if (it.mode === 'step'){
+        rowT = `scale(${1 - .38*smooth(0,.9,p)})`;
+        fo = 1 - smooth(.45,.85,p); po = smooth(.4,.85,p); ps = 1.12 - .12*po;
+      } else if (it.mode === 'assemble'){
+        const e = smooth(0,.75,p);
+        it.planes.forEach((pl,i) => {
+          pl.el.style.transform = `translateX(${-it.offs[i]*e}px) scale(${1 + .15*e})`;
+          pl.el.style.opacity = 1 - smooth(.5,.9,p)*(.35 + .65*(i>0));
+        });
+        fo = 1 - smooth(.6,.95,p); po = smooth(.55,.92,p); ps = .94 + .06*po;
+      }
+      if (it.zoomOnly || it.z > 1.01){
+        const zx = (0.5 - it.ox) * (it.z - 1) * 115 / it.z, zy = (0.5 - it.oy) * (it.z - 1) * 115 / it.z;
+        rowT += ` scale(${it.z}) translate(${zx}%, ${zy}%)`;
+      }
+      it.row.style.transform = rowT;
+      it.planes.forEach(pl => pl.el.style.boxShadow = it.z > 1.05 ? 'none' : '');
+      const front = it.row.parentElement;
+      front.style.opacity = fo * (1 - n);
+      front.style.transform = n > .001 ? `scale(${1 + .6*n})` : '';
+      if (it.photo){
+        it.photo.style.opacity = po * (1 - n);
+        it.photo.firstElementChild.style.transform = `scale(${ps * (1 + .6*n)})`;
+      }
+      it.detail.style.opacity = n;
+      it.dimg.style.transform = `scale(${1.12 - .12*n})`;
+      it.dimg.style.objectPosition = `${it.ox*100}% ${it.oy*100}%`;
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
