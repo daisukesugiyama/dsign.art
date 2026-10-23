@@ -24,6 +24,7 @@
 /* The door. It opens on the torso at full size and pulls back to the whole work on the wall,
    the same movement as the reels. A click anywhere goes in. */
 :root{--wall:#ebe9e6;--ink:#24211d;--ink-soft:#6c665e;color-scheme:light}
+html{touch-action:none}  /* the door never zooms or pans; a tap goes in */
 html,body{margin:0;height:100%;background:var(--wall) url(img/washi.jpg) 0 0/768px repeat;background-blend-mode:overlay;color:var(--ink)}
 body{overflow:hidden;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 html[data-lang="ja"] [data-l]:not([data-l="ja"]),html[data-lang="en"] [data-l]:not([data-l="en"]),html[data-lang="zh"] [data-l]:not([data-l="zh"]){display:none!important}

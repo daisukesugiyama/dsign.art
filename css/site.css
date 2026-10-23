@@ -35,11 +35,13 @@ html[data-lang="en"]{--f-prose:var(--f-en)}
 html[data-lang="zh"]{--f-prose:"Noto Serif SC","Songti SC","SimSun",serif;--f-ui:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;--f-mincho:"Noto Serif SC","Songti SC",serif}
 
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:24px}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:24px;
+  touch-action:pan-x pan-y}  /* the page never zooms (pinch, double tap): it is laid out like the work; coming closer happens in the work */
 body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.8;
   background:var(--wall) url(../img/washi.jpg) 0 0/768px repeat;background-blend-mode:overlay;
   font-kerning:normal;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
+img.is-peek{position:relative;z-index:40;will-change:transform}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--seiheki);outline-offset:3px}
 ::selection{background:var(--kihada);color:var(--ink)}
@@ -166,14 +168,26 @@ html[data-lang="en"] .title{font-family:var(--f-en);letter-spacing:.01em;font-si
 .scale-full{font-size:12px;letter-spacing:.12em;color:var(--wall);background:var(--shu);padding:2px 8px;opacity:0;transition:opacity .25s}
 .scale-full[data-on="true"]{opacity:1}
 .viewer-hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;pointer-events:none;
-  background:rgba(36,33,29,.78);color:#f3f1ee;font-size:14px;letter-spacing:.06em;padding:10px 16px;opacity:0;transition:opacity .25s}
+  background:rgba(36,33,29,.78);color:#f3f1ee;font-size:14px;letter-spacing:.06em;padding:10px 16px;opacity:0;transition:opacity .25s;
+  width:max-content;max-width:calc(100% - 32px);text-align:center;text-wrap:balance;word-break:auto-phrase}
 .viewer-hint[data-show="true"]{opacity:1}
+.viewer-hint[data-for="touch"] .for-wheel,.viewer-hint:not([data-for="touch"]) .for-touch{display:none}
+.viewer-how .for-touch,.work-view.is-touch .viewer-how .for-mouse{display:none}
+.work-view.is-touch .viewer-how .for-touch{display:inline}
+/* fingers: on the page there is only "fill the screen"; once it fills, everything */
+.work-view.is-touch:not(.is-full) .controls button:not([data-act="screen"]){display:none}
+.viewer-close{display:none}
+.work-view.is-full .viewer-close{display:block;position:absolute;z-index:4;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));
+  width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgba(235,233,230,.88);color:var(--ink);font:300 26px/44px var(--f-ui);cursor:pointer;
+  box-shadow:0 1px 6px rgba(36,33,29,.18)}
+.work-view.is-full .viewer-close:hover{background:var(--wall)}
 .viewer-how{margin:0;color:var(--ink-soft)}
-.work-view.is-full{position:fixed;inset:0;z-index:60;display:grid;grid-template-rows:minmax(0,1fr) auto}
+.work-view.is-full{position:fixed;inset:0;z-index:60;display:grid;grid-template-rows:minmax(0,1fr) auto;touch-action:none;overscroll-behavior:contain}
 .work-view.is-full .viewer-stage{height:auto;min-height:0}
 .work-view.is-full .viewer-bar{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 @media (max-width:999px){
   .viewer-stage{height:max(calc(56.03vw + 96px),44svh)}
   .viewer-bar{row-gap:12px}
   .viewer-how{display:none}
+  .work-view.is-touch:not(.is-full) .viewer-how{display:block;font-size:13px}
 }

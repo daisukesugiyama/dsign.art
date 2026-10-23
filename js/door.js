@@ -3,6 +3,10 @@
    whole picture stands on the wall: from wanting to looking. One movement, once.
    A click anywhere goes in. */
 (() => {
+  // the door never zooms: CSS touch-action does it, and iOS Safari also has to be asked here
+  if ('ongesturestart' in window) {
+    ['gesturestart', 'gesturechange'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
+  }
   const el = document.querySelector('[data-door]');
   if (!el) return;
   const root = document.documentElement;
