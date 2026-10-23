@@ -88,17 +88,22 @@
     img.addEventListener('touchcancel', settle);
   });
 
-  // menu (small screens): one button opens the whole list
+  // the menu, on every screen: one button opens the whole list; the line with the name, the
+  // language and the button stays in place above it
   const menu = document.querySelector('.site-nav');
   const toggle = document.querySelector('.menu-toggle');
   if (menu && toggle) {
-    const close = () => { menu.dataset.open = 'false'; toggle.setAttribute('aria-expanded', 'false'); };
-    toggle.addEventListener('click', () => {
-      const open = menu.dataset.open !== 'true';
+    const openMenu = open => {
       menu.dataset.open = String(open);
       toggle.setAttribute('aria-expanded', String(open));
+      root.classList.toggle('menu-open', open);
+    };
+    toggle.addEventListener('click', e => {
+      const open = menu.dataset.open !== 'true';
+      openMenu(open);
+      if (open && e.detail === 0) requestAnimationFrame(() => { const first = menu.querySelector('a'); if (first) first.focus(); });   // opened from the keyboard
     });
-    addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+    addEventListener('keydown', e => { if (e.key === 'Escape' && menu.dataset.open === 'true') { openMenu(false); toggle.focus(); } });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => openMenu(false)));
   }
 })();
