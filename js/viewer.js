@@ -1,7 +1,12 @@
 /* D.sign — full-size viewer for a work (OpenSeadragon underneath).
-   From the whole down to full size: one pixel of the data on one pixel of the screen.
-   There is no overview map on purpose. Up close the whole is lost, as it is in front
-   of the work; the scale bar says only how close you are, in centimetres of the work.
+   From the whole down to full size — one pixel of the data on one pixel of the screen — and on to
+   the pixels themselves. There is no overview map on purpose. Up close the whole is lost, as it is
+   in front of the work; the scale bar says how big what you see is, in centimetres of the work, and
+   the ruler beside it says where you stand between the whole and the pixels.
+
+   The mouse: a click comes one stop closer. At the pixels the next click steps back to the whole,
+   so a click never goes dead, and the pointer shows which it will be (a magnifier with + or −).
+   Shift or ⌥ with a click steps back one stop.
 
    Fingers: on the page, the page comes first. One finger always scrolls the page and never
    moves the work; two fingers let you look closer for a moment, and the work settles back to
@@ -41,12 +46,12 @@
     visibilityRatio: 0.5,
     constrainDuringPan: true,
     zoomPerScroll: 1.25,
-    zoomPerClick: 2,
     imageLoaderLimit: 8,
     timeout: 60000,
-    gestureSettingsMouse: { clickToZoom: true, dblClickToZoom: false, scrollToZoom: true, flickEnabled: true, pinchRotate: false },
+    // clicks with a mouse or a pen go stop by stop along the ruler (below), not by a fixed factor
+    gestureSettingsMouse: { clickToZoom: false, dblClickToZoom: false, scrollToZoom: true, flickEnabled: true, pinchRotate: false },
     gestureSettingsTouch: Object.assign({}, FINGERS_PAGE),
-    gestureSettingsPen: { clickToZoom: true, dblClickToZoom: false, pinchRotate: false },
+    gestureSettingsPen: { clickToZoom: false, dblClickToZoom: false, pinchRotate: false },
   });
 
   const vp = () => v.viewport;
@@ -62,11 +67,11 @@
     hint.dataset.for = kind;
     hint.dataset.show = 'true';
     clearTimeout(hintTimer);
-    hintTimer = setTimeout(() => { hint.dataset.show = 'false'; }, kind === 'touch' ? 2400 : 1500);
+    hintTimer = setTimeout(() => { hint.dataset.show = 'false'; }, kind === 'wheel' ? 1500 : 2400);
   };
 
   // the wheel keeps scrolling the page; the work zooms with Ctrl/⌘ + wheel, a trackpad pinch,
-  // a click, the buttons — or freely once the viewer fills the screen
+  // a click, the ruler — or freely once the viewer fills the screen
   v.addHandler('canvas-scroll', e => {
     const o = e.originalEvent;
     if (isFull() || o.ctrlKey || o.metaKey) return;
@@ -90,13 +95,121 @@
   };
   document.addEventListener('dsign:zoom', setTouch);
 
+  // ---------- where you stand: the ruler under the work ----------
+  // Stops, from far to near: the whole, halvings of full size, full size, the pixels (the closest
+  // the viewer goes, two screen pixels to one of the data). The ruler is drawn in steps of halving,
+  // so each stop sits as far from the next as it looks.
+  const track = host.querySelector('.track');
+  const here = host.querySelector('.here');
+  const stepOut = host.querySelector('.step[data-act="out"]');
+  const stepIn = host.querySelector('.step[data-act="in"]');
+  const major = {};
+  host.querySelectorAll('.stop[data-stop]').forEach(b => { major[b.dataset.stop] = b; });
+  let stops = [], minors = [];
+  const ZH = { 2: '二', 4: '四', 8: '八', 16: '十六', 32: '三十二' };
+  const FRACTION = { 2: '½', 4: '¼', 8: '⅛' };
+  const near = (a, b) => Math.abs(Math.log2(a / b)) < 0.06;            // within about 4%
+  const nextStop = z => stops.find(s => s > z * 1.06);
+  const prevStop = z => { for (let i = stops.length - 1; i >= 0; i--) if (stops[i] < z / 1.06) return stops[i]; };
+  const at = z => Math.min(1, Math.max(0, Math.log2(z / stops[0]) / (Math.log2(stops[stops.length - 1] / stops[0]) || 1)));
+  const place = (el, z) => { el.style.left = `${(at(z) * 100).toFixed(3)}%`; };
+
+  const goStop = (s, ref) => {
+    if (!stops.length || !(s > 0)) return;
+    if (s <= stops[0] * 1.001) { vp().goHome(); return; }
+    vp().zoomTo(vp().imageToViewportZoom(s), ref || null);
+    vp().applyConstraints();
+  };
+
+  const build = () => {
+    if (!track || !v.world.getItemCount()) return;
+    const home = vp().viewportToImageZoom(vp().getHomeZoom());
+    const max = vp().viewportToImageZoom(vp().getMaxZoom());
+    const halves = [];
+    for (let s = 0.5; s > home * 1.3; s /= 2) halves.unshift(s);
+    stops = [home, ...halves, 1, max];
+    if (minors.length !== halves.length) {      // the small ticks between: how many depends on the screen
+      minors.forEach(b => b.remove());
+      const lang = document.documentElement.dataset.lang || 'ja';
+      minors = halves.map(s => {
+        const d = Math.round(1 / s), b = document.createElement('button'), t = document.createElement('span');
+        b.type = 'button';
+        b.className = 'stop minor';
+        b.dataset.labelJa = `原寸の${d}分の1`;
+        b.dataset.labelEn = `1/${d} of full size`;
+        b.dataset.labelZh = `原尺寸的${ZH[d] || d}分之一`;
+        b.setAttribute('aria-label', b.getAttribute('data-label-' + lang) || b.dataset.labelJa);
+        t.className = 'lbl';
+        t.textContent = FRACTION[d] || `1/${d}`;
+        b.append(t);
+        b.addEventListener('click', () => goStop(+b.dataset.z));
+        track.insertBefore(b, major.full);
+        return b;
+      });
+    }
+    minors.forEach((b, i) => { b.dataset.z = halves[i]; place(b, halves[i]); });
+    [[major.whole, home], [major.full, 1], [major.pixel, max]].forEach(([b, z]) => { if (b) { b.dataset.z = z; place(b, z); } });
+    fitLabels();
+  };
+  // the words under the ruler must not run into each other: on a short ruler,
+  // "full size" steps to the left of its tick
+  const fitLabels = () => {
+    const f = major.full, p = major.pixel;
+    if (!f || !p) return;
+    f.classList.remove('tuck');
+    const a = f.querySelector('.lbl').getBoundingClientRect(), b = p.querySelector('.lbl').getBoundingClientRect();
+    if (a.width && a.right > b.left - 8) f.classList.add('tuck');
+  };
+  document.addEventListener('dsign:lang', () => requestAnimationFrame(fitLabels));
+  if (document.fonts) document.fonts.ready.then(fitLabels);
+
+  // the mouse pointer says what a click will do; Shift or ⌥ held turns it to stepping back
+  let back = false;
+  const setClick = () => {
+    if (!stops.length) return;
+    host.dataset.click = back || nextStop(imageZoom()) === undefined ? 'out' : 'in';
+  };
+  const holdBack = e => { const b = !!(e.shiftKey || e.altKey); if (b !== back) { back = b; setClick(); } };
+  addEventListener('keydown', holdBack);
+  addEventListener('keyup', holdBack);
+  stage.addEventListener('pointermove', holdBack);
+  addEventListener('blur', () => { back = false; setClick(); });
+
+  const updateRuler = () => {
+    if (!stops.length) return;
+    const z = imageZoom();
+    if (here) place(here, z);
+    [major.whole, ...minors, major.full, major.pixel].forEach(b => { if (b) b.setAttribute('aria-current', String(near(+b.dataset.z, z))); });
+    if (stepOut) stepOut.setAttribute('aria-disabled', String(prevStop(z) === undefined));
+    if (stepIn) stepIn.setAttribute('aria-disabled', String(nextStop(z) === undefined));
+    setClick();
+  };
+  host.querySelectorAll('.stop.major').forEach(b => b.addEventListener('click', () => goStop(+b.dataset.z)));
+
+  // a click: one stop closer; at the pixels, back to the whole (the first time, a word says so)
+  let toldEnd = false;
+  v.addHandler('canvas-click', e => {
+    const o = e.originalEvent || {};
+    if (o.pointerType === 'touch' || !e.quick) return;    // fingers have their own ways (below)
+    e.preventDefaultAction = true;
+    const z = imageZoom(), ref = vp().pointFromPixel(e.position, true);
+    if (e.shift || o.altKey) { goStop(prevStop(z), ref); return; }
+    const s = nextStop(z);
+    if (s === undefined) { vp().goHome(); return; }
+    goStop(s, ref);
+    if (s === stops[stops.length - 1] && !toldEnd) { toldEnd = true; setTimeout(() => flashHint('end'), 700); }
+  });
+
   // on the page, fingers that try to move the work get told where that happens
   const isTouch = e => (e.pointerType || (e.originalEvent && e.originalEvent.pointerType)) === 'touch';
   // a tap on the picture opens it to the full screen
   v.addHandler('canvas-click', e => { if (!isFull() && isTouch(e) && e.quick) enterFull(); });
   let draggedHint = false;
-  v.addHandler('canvas-drag', e => { if (!isFull() && isTouch(e) && !draggedHint) { draggedHint = true; flashHint('touch'); } });
-  v.addHandler('canvas-release', () => { draggedHint = false; });
+  v.addHandler('canvas-drag', e => {
+    if (!isTouch(e)) { host.classList.add('is-dragging'); return; }
+    if (!isFull() && !draggedHint) { draggedHint = true; flashHint('touch'); }
+  });
+  v.addHandler('canvas-release', () => { draggedHint = false; host.classList.remove('is-dragging'); });
 
   // two fingers on the page: spreading them opens the picture to the full screen, at the place
   // and the closeness the fingers chose; a small or backward pinch just settles back
@@ -131,7 +244,6 @@
   // scale bar, in centimetres of the work
   const bar = host.querySelector('.scale-bar');
   const barLabel = host.querySelector('.scale-label');
-  const fullMark = host.querySelector('.scale-full');
   const NICE = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50];
   const fmt = cm => cm < 1 ? `${+(cm * 10).toFixed(1)} mm` : `${cm} cm`;
   const updateScale = () => {
@@ -141,13 +253,12 @@
     for (const n of NICE) { if (n / cmPerScreenPx >= 60) { len = n; break; } }
     bar.style.width = `${Math.round(len / cmPerScreenPx)}px`;
     barLabel.textContent = fmt(len);
-    if (fullMark) fullMark.dataset.on = String(imageZoom() >= 0.97);
   };
 
-  const tick = () => { updateScale(); setTouch(); };
+  const tick = () => { updateScale(); setTouch(); updateRuler(); };
   v.addHandler('animation', tick);
   v.addHandler('animation-finish', tick);
-  v.addHandler('resize', tick);
+  v.addHandler('resize', () => { build(); tick(); });
 
   // filling the screen: our own mode, so the controls come along. It is a step in the
   // history, so the phone's back gesture returns to the page instead of leaving the site.
@@ -176,8 +287,8 @@
     host.classList.remove('is-full');
     document.documentElement.style.overflow = '';
     if (keep) { keep.remove(); keep = null; }
-    const back = () => scrollTo(0, keepY);
-    back(); requestAnimationFrame(back); setTimeout(back, 150);
+    const restore = () => scrollTo(0, keepY);
+    restore(); requestAnimationFrame(restore); setTimeout(restore, 150);
     setTimeout(() => { if ('scrollRestoration' in history) history.scrollRestoration = 'auto'; }, 200);
     setFingers(false);
     screenButtons.forEach(b => b.setAttribute('aria-pressed', 'false'));
@@ -227,6 +338,7 @@
 
   v.addHandler('open', () => {
     host.classList.add('is-open');
+    build();
     const name = decodeURIComponent(location.hash.slice(1));
     if (spots[name]) {
       if (coarse) { enterFull(false); setTimeout(() => goTo(...spots[name], true), 80); }
@@ -238,11 +350,13 @@
 
   const act = {
     whole: () => vp().goHome(),
-    in: () => { vp().zoomBy(2); vp().applyConstraints(); },
-    out: () => { vp().zoomBy(0.5); vp().applyConstraints(); },
-    full: () => { vp().zoomTo(vp().imageToViewportZoom(1)); vp().applyConstraints(); },
+    in: () => goStop(nextStop(imageZoom())),
+    out: () => goStop(prevStop(imageZoom())),
+    full: () => goStop(1),
     screen: () => (isFull() ? closeFull() : enterFull()),
     close: () => closeFull(),
   };
-  host.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', () => act[b.dataset.act]()));
+  host.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', () => {
+    if (b.getAttribute('aria-disabled') !== 'true') act[b.dataset.act]();
+  }));
 })();

@@ -164,30 +164,58 @@ html[data-lang="en"] .title{font-family:var(--f-en);letter-spacing:.01em;font-si
 .work-view.is-static .viewer-stage{display:none}
 .viewer-static{display:none}
 .work-view.is-static .viewer-static{display:block;width:100%}
-.viewer-bar{padding-block:14px 16px;align-items:center;font-size:13px;letter-spacing:.06em}
-.controls{display:flex;flex-wrap:wrap;gap:6px}
-.controls button{font:inherit;font-family:var(--f-ui);font-size:13px;letter-spacing:.06em;color:var(--ink);background:transparent;
-  border:1px solid var(--rule);border-radius:0;padding:6px 12px;min-width:40px;cursor:pointer;transition:border-color .2s,background-color .2s}
-.controls button:hover{border-color:var(--ink)}
-.controls .back-label{display:none}
-.work-view.is-full .controls .fill-label{display:none}
-.work-view.is-full .controls .back-label{display:inline}
-.controls button[data-act="in"],.controls button[data-act="out"]{font-family:var(--f-en);font-size:18px;line-height:1;padding:4px 10px}
-.scale{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:32px;color:var(--ink-soft)}
+.viewer-bar{padding-block:18px 14px;align-items:start;font-size:13px;letter-spacing:.06em}
+/* where you stand: one rule from the whole to the pixels, with full size marked on it; the vermilion
+   mark is you, and it moves as you come closer. The steps at either end go one stop nearer or further. */
+.controls{display:flex;align-items:flex-start;gap:16px;min-width:0}
+.controls .step{flex:none;width:34px;height:34px;margin-top:-4px;display:grid;place-items:center;padding:0 0 2px;
+  border:1px solid var(--ink-soft);border-radius:0;background:transparent;color:var(--ink);font:400 22px/1 var(--f-en);cursor:pointer;
+  transition:border-color .2s,background-color .2s,color .2s}
+.controls .step:hover{border-color:var(--ink);background:rgba(36,33,29,.06)}
+.controls .step[aria-disabled="true"]{border-color:var(--rule);color:var(--rule);background:transparent;cursor:default}
+.track{position:relative;flex:1 1 auto;min-width:150px;max-width:360px;height:46px}
+.track::before{content:"";position:absolute;left:0;right:0;top:13px;border-top:1px solid var(--ink)}
+.stop{position:absolute;top:0;left:0;width:32px;height:46px;margin-left:-16px;padding:0;border:0;background:none;cursor:pointer;
+  color:var(--ink-soft);font:12px/1 var(--f-ui);letter-spacing:.14em;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.stop::before{content:"";position:absolute;left:50%;top:6px;width:1px;height:15px;background:var(--ink)}  /* the tick */
+.stop.minor::before{top:9px;height:9px}
+.stop .lbl{position:absolute;top:27px;left:50%;transform:translateX(-50%);padding:3px 6px 2px;line-height:1.2;transition:color .2s,background-color .2s}
+.stop.first .lbl{transform:translateX(-6px)}
+.stop.last .lbl,.stop.tuck .lbl{left:auto;right:50%;transform:translateX(6px)}
+html[data-lang="en"] .stop{letter-spacing:.04em}
+.stop.minor .lbl{opacity:0;top:25px;font:15px/1.2 var(--f-en);letter-spacing:0;color:var(--ink)}
+.stop:hover,.stop[aria-current="true"]{color:var(--ink)}
+.stop.minor:hover .lbl,.stop.minor:focus-visible .lbl{opacity:1}
+.stop[data-stop="full"][aria-current="true"] .lbl{background:var(--shu);color:var(--wall)}
+.stop:focus-visible{outline:none}
+.stop:focus-visible .lbl{outline:2px solid var(--seiheki);outline-offset:1px}
+.here{position:absolute;top:2px;left:0;width:3px;height:23px;margin-left:-1px;background:var(--shu);pointer-events:none}
+/* beside it, on the same two lines: how big what you see is, and how to move; filling the screen at the end */
+.viewer-side{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:28px;row-gap:9px;align-items:center}
+.scale{grid-column:1;grid-row:1;height:20px;margin-top:3px;display:flex;align-items:center;gap:12px;color:var(--ink-soft)}
 .scale-bar{display:inline-block;height:7px;border:1px solid var(--ink);border-top:0;width:80px;transition:width .15s}
 .scale-label{font-family:var(--f-en);font-size:16px;color:var(--ink);min-width:3.5em}
-.scale-full{font-size:12px;letter-spacing:.12em;color:var(--wall);background:var(--shu);padding:2px 8px;opacity:0;transition:opacity .25s}
-.scale-full[data-on="true"]{opacity:1}
+.screen-btn{grid-column:2;grid-row:1 / span 2;align-self:start;margin-top:-4px;display:inline-flex;align-items:center;gap:9px;height:34px;padding:0 15px;border:1px solid var(--ink-soft);border-radius:0;
+  background:transparent;color:var(--ink);font:13px/1 var(--f-ui);letter-spacing:.08em;cursor:pointer;transition:border-color .2s,background-color .2s}
+.screen-btn:hover{border-color:var(--ink);background:rgba(36,33,29,.06)}
+.screen-btn .back-label{display:none}
+.work-view.is-full .screen-btn .fill-label{display:none}
+.work-view.is-full .screen-btn .back-label{display:inline}
+/* the mouse: the pointer says what a click will do — come closer, or, at the pixels, go back to the whole */
+.work-view[data-click="in"] .openseadragon-canvas{cursor:zoom-in}
+.work-view[data-click="out"] .openseadragon-canvas{cursor:zoom-out}
+.work-view.is-dragging .openseadragon-canvas{cursor:grabbing}
 .viewer-hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;pointer-events:none;
   background:rgba(36,33,29,.78);color:#f3f1ee;font-size:14px;letter-spacing:.06em;padding:10px 16px;opacity:0;transition:opacity .25s;
   width:max-content;max-width:calc(100% - 32px);text-align:center;text-wrap:balance;word-break:auto-phrase}
 .viewer-hint[data-show="true"]{opacity:1}
-.viewer-hint[data-for="touch"] .for-wheel,.viewer-hint:not([data-for="touch"]) .for-touch{display:none}
+.viewer-hint > span{display:none}
+.viewer-hint[data-for="wheel"] .for-wheel,.viewer-hint[data-for="touch"] .for-touch,.viewer-hint[data-for="end"] .for-end{display:inline}
 .viewer-how .for-touch,.work-view.is-touch .viewer-how .for-mouse{display:none}
 .work-view.is-touch .viewer-how .for-touch{display:inline}
 /* fingers: on the page the picture itself (or the button on its corner) opens it to the full screen;
    the controls come with it there */
-.work-view.is-touch:not(.is-full) .controls{display:none}
+.work-view.is-touch:not(.is-full) .controls,.work-view.is-touch:not(.is-full) .screen-btn{display:none}
 .viewer-open{display:none}
 .work-view.is-touch:not(.is-full) .viewer-open{display:flex;align-items:center;gap:8px;position:absolute;z-index:3;
   top:12px;right:calc(12px + env(safe-area-inset-right,0px));height:40px;padding:0 15px 0 13px;border:1px solid var(--rule);border-radius:20px;
@@ -197,13 +225,19 @@ html[data-lang="en"] .title{font-family:var(--f-en);letter-spacing:.01em;font-si
   width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgba(235,233,230,.88);color:var(--ink);font:300 26px/44px var(--f-ui);cursor:pointer;
   box-shadow:0 1px 6px rgba(36,33,29,.18)}
 .work-view.is-full .viewer-close:hover{background:var(--wall)}
-.viewer-how{margin:0;color:var(--ink-soft)}
+.viewer-how{grid-column:1;grid-row:2;margin:0;color:var(--ink-soft);word-break:auto-phrase;text-wrap:pretty}
 .work-view.is-full{position:fixed;inset:0;z-index:60;display:grid;grid-template-rows:minmax(0,1fr) auto;touch-action:none;overscroll-behavior:contain}
 .work-view.is-full .viewer-stage{height:auto;min-height:0}
 .work-view.is-full .viewer-bar{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 @media (max-width:999px){
   .viewer-stage{height:max(calc(56.03vw + 96px),44svh)}
-  .viewer-bar{row-gap:12px}
+  .viewer-bar{row-gap:14px}
+  .track{max-width:none}
   .viewer-how{display:none}
   .work-view.is-touch:not(.is-full) .viewer-how{display:block;font-size:13px}
+}
+@media (pointer:coarse){
+  .controls .step{width:44px;height:44px;margin-top:-9px}
+  .stop{width:40px;margin-left:-20px}
+  .screen-btn{height:44px}
 }
