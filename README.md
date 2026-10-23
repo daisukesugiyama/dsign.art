@@ -22,6 +22,7 @@ D.sign（杉山 大介）のサイト。静的な HTML だけで動く（GitHub 
 - `js/door.js` 扉の動き
 - `torso/001/tiles.dzi` と `tiles_files/` 原寸 10630 × 5950 px のタイル（JPEG、色の間引きなし）。`torso/001/img/` 全体の縮小、寄りの 8 か所、OG 画像
 - 画像はどれも C2PA などのメタデータを持たない（書き出しで落としてある）
+- `css/site.css` と `js/*.js` は、どのページでも `?v=20261023b` のような版の印を付けて読む。CSS や JS を変えたら、全ページの印を新しくする（GitHub Pages は 10 分ほど古いものを配るので、新しい HTML と古い CSS が混ざらないように）
 
 ## 新しい TORSO を足すとき
 
