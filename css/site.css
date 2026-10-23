@@ -150,6 +150,16 @@ html[data-lang="en"] .title{font-family:var(--f-en);letter-spacing:.01em;font-si
 /* ---------- sheets: blocks of paper laid over the band (small screens) ---------- */
 .sheet{position:relative}
 
+/* ---------- back to the top (phones) ---------- */
+/* at the very end of a page a small ↑ appears in the corner and takes you back up (site.js) */
+.to-top{position:fixed;z-index:15;right:calc(var(--margin) + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  width:44px;height:44px;display:grid;place-items:center;padding:0;border:1px solid var(--rule);border-radius:50%;
+  background:rgba(235,233,230,.94);color:var(--ink);box-shadow:0 1px 6px rgba(36,33,29,.12);cursor:pointer;-webkit-tap-highlight-color:transparent;
+  opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .3s,transform .3s,visibility 0s .3s}
+.to-top.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .3s}
+html.menu-open .to-top{opacity:0;visibility:hidden}
+@media (min-width:1000px){.to-top{display:none}}
+
 /* ---------- footer ---------- */
 .site-foot{padding:120px 0 calc(48px + env(safe-area-inset-bottom,0px));font-size:13px;color:var(--ink-soft);letter-spacing:.04em}
 .site-foot a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}

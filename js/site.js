@@ -116,9 +116,33 @@
       upBy -= dy;
       if (upBy > 28 && y > head.offsetHeight) show();
     }, { passive: true });
-    const quiet = () => { quietUntil = performance.now() + 1200; upBy = 0; hide(); };
+    const quiet = e => { quietUntil = performance.now() + ((e && e.detail && e.detail.ms) || 1200); upBy = 0; hide(); };
     document.addEventListener('click', e => { if (e.target.closest && e.target.closest('a[href*="#"]')) quiet(); });
     document.addEventListener('dsign:quiet-head', quiet);
+  }
+
+  // phones: at the very end of a page a small ↑ appears, and takes you back to the top
+  const page = document.querySelector('.page');
+  if (page) {
+    const up = document.createElement('button');
+    up.type = 'button';
+    up.className = 'to-top';
+    up.dataset.labelJa = 'ページの上へ';
+    up.dataset.labelEn = 'Back to the top';
+    up.dataset.labelZh = '回到顶部';
+    up.setAttribute('aria-label', up.getAttribute('data-label-' + (root.dataset.lang || 'ja')) || up.dataset.labelJa);
+    up.innerHTML = '<svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 13.6V2.8M3.6 7.2 8 2.8l4.4 4.4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    page.append(up);
+    const atEnd = () => document.documentElement.scrollHeight - (scrollY + innerHeight) < 56 && scrollY > innerHeight * 0.5;
+    const sync = () => up.classList.toggle('is-on', atEnd());
+    addEventListener('scroll', sync, { passive: true });
+    addEventListener('resize', sync);
+    sync();
+    up.addEventListener('click', e => {
+      document.dispatchEvent(new CustomEvent('dsign:quiet-head', { detail: { ms: 2500 } }));   // the line stays away on the way up
+      scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      if (e.detail === 0) { const m = document.querySelector('.mark'); if (m) m.focus({ preventScroll: true }); }
+    });
   }
 
   // the menu, on every screen: one button opens the whole list; the line with the name, the
