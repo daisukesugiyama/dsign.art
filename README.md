@@ -1,8 +1,28 @@
 # dsign.art
 
-D.sign（杉山 大介）のサイト。静的なHTMLだけで動く。
+D.sign（杉山 大介）のサイト。静的な HTML だけで動く（GitHub Pages）。
 
-- `index.html` 扉
-- `home.html` トップ（一行・記録・シリーズ・奥付）
-- `2021-2023.html` 2021–2023の作品
-- `img/` 画像（Web用に縮小済み。原本は手元）
+## ページ
+
+- `index.html` 扉。原寸のトルソーから引いて、壁の上の全体へ（リール「引く」と同じ動き）
+- `home.html` ホーム。いまの作品を端から端まで、一行、本文（日・英・中）、いまのシリーズ
+- `torso/` TORSO のシリーズ、`torso/001/` No.001（全体から原寸まで寄れるビューア）
+- `2021-2023.html` 2021–2023 の作品、`sound.html` Submerged Room
+- `beginnings.html` はじまり、`record.html` 記録、`prints.html` 欲しい人へ、`cv.html` 略歴
+
+## しくみ
+
+- `css/site.css` 共通。`:root` の `--band-x` `--band-w` `--shu` が「帯」。いまの作品（No.001）の朱の帯が画面の 39.6% に立つので、ページにも同じ位置に帯を立てている。ホームの作品は横幅いっぱいに置くので、作品の帯とページの帯がつながる。次の作品で位置と色を変える
+- 小さい画面では、帯は紙（`.sheet`）の後ろを通り、紙と紙のすき間にだけ見える
+- `js/site.js` 言語（日・英・中）とメニュー。`?lang=en` を付けたリンクで英語のページを開ける
+- `js/viewer.js` 原寸ビューア（OpenSeadragon 5.0.1 を `js/vendor/` に同梱）。全体を見ている間はスクロールでページが動き、ピンチ・Ctrl/⌘＋スクロール・クリックで寄る。ミニマップは置かない（寄ると全体が分からなくなる作りのため）。目盛りは作品の cm
+- `js/door.js` 扉の動き
+- `torso/001/tiles.dzi` と `tiles_files/` 原寸 10630 × 5950 px のタイル（JPEG、色の間引きなし）。`torso/001/img/` 全体の縮小、寄りの 8 か所、OG 画像
+- 画像はどれも C2PA などのメタデータを持たない（書き出しで落としてある）
+
+## 新しい TORSO を足すとき
+
+1. 原寸の PNG から、タイル（`tiles.dzi`）、`whole-*.jpg`、`spot-*.jpg`、`og.jpg` を作る
+2. `torso/00N/index.html` を 001 にならって作る（寄りの場所は投稿の切り抜きと同じ座標）
+3. `torso/index.html` の一覧、`home.html` の作品、`record.html`、扉（`index.html` の `data-dzi` `data-tx` `data-ty`）を差し替える
+4. 帯の位置と色を `css/site.css` の `:root` で変える

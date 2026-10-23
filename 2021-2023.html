@@ -1,17 +1,22 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-title-ja="2021–2023 — D.sign" data-title-en="2021–2023 — D.sign" data-title-zh="2021–2023 — D.sign">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}.mark .kd{margin-right:-.09em}
-.mark .kp{margin-right:-.04em}
-</style>
 <title>2021–2023 — D.sign</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&family=Noto+Serif+SC:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap">
+<meta name="description" content="2021–2023。UVインクジェットで帯・着物に刷った「絵画」。“Paintings” printed with UV inkjet on obi and kimono.">
+<link rel="canonical" href="https://dsign.art/2021-2023.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="D.sign">
+<meta property="og:title" content="2021–2023 — D.sign">
+<meta property="og:image" content="https://dsign.art/img/korin.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script>(()=>{const L=['ja','en','zh'],r=document.documentElement;let s=null;try{s=localStorage.getItem('dsign-lang')}catch(e){}const q=new URLSearchParams(location.search).get('lang');const n=(navigator.language||'ja').toLowerCase();const l=L.includes(q)?q:L.includes(s)?s:n.startsWith('ja')?'ja':n.startsWith('zh')?'zh':'en';r.dataset.lang=l;r.lang=l==='zh'?'zh-Hans':l;if(L.includes(q)){try{localStorage.setItem('dsign-lang',q)}catch(e){}}})();</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&family=Noto+Serif+SC:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/site.css">
 <style>
 /* Layout: the page is the gallery wall. Each work hangs on its own stretch of wall.
    Moving the pointer left changes where you stand (front → side, near → far, four → one).
@@ -26,22 +31,13 @@
   --f-text:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
   color-scheme:light;
 }
-html,body{background:var(--wall);color:var(--ink)}
-body{font-family:var(--f-text);font-size:16px;line-height:1.85;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));}
-.wrap{max-width:1280px;margin:0 auto}
-header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:28px 8px}
-.mark{font-family:"EB Garamond","Garamond",serif;font-weight:500;font-size:25px;letter-spacing:.02em;color:var(--ink);text-decoration:none}
-.line{font-family:var(--f-display);font-size:15px;color:var(--ink-soft);text-wrap:balance}
-.period{padding-block:56px 8px;display:grid;gap:10px;justify-items:center}
-.period h1{text-align:center}
-.period p{justify-self:center;width:min(100%,38em);text-align:left}
-.period h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(28px,4vw,44px);letter-spacing:.06em;font-variant-numeric:tabular-nums}
-.period p{margin:0}
-.period p{font-size:17px}
+.period{padding-block:clamp(56px,6vw,96px) 8px;align-items:start}
+.period h1{margin:0;font-family:var(--f-en);font-weight:400;font-size:clamp(44px,4.8vw,76px);line-height:1;letter-spacing:.02em;font-variant-numeric:lining-nums}
+.period .r p{margin:0 0 10px;font-family:var(--f-prose);font-size:18px;line-height:1.95;max-width:34em}
+html[data-lang="en"] .period .r p{font-size:20px;line-height:1.55}
 .note{color:var(--ink-soft);font-size:14px !important;letter-spacing:.03em}
-main{display:flex;flex-direction:column;gap:104px;padding-block:40px 140px}
+#works{display:flex;flex-direction:column;gap:clamp(72px,7vw,110px);padding-block:56px 20px}
+.work .stage,.work .walk{margin-inline:var(--margin)}
 
 .work{display:grid;gap:16px}
 .stage{position:relative;height:min(82vh,960px);min-height:420px;background:var(--wall-w,var(--wall));
@@ -73,45 +69,75 @@ main{display:flex;flex-direction:column;gap:104px;padding-block:40px 140px}
 .walk input::-moz-range-thumb{width:9px;height:9px;border:0;border-radius:50%;background:var(--mark)}
 .walk input:focus-visible{outline:1px solid var(--ink);outline-offset:4px}
 
-.cap{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;justify-items:center;text-align:center;
-  justify-self:center;width:min(100%,640px)}
-.cap h2{margin:0;font-family:var(--f-display);font-weight:500;font-size:clamp(24px,2.6vw,33px);letter-spacing:.02em;text-wrap:balance}
-.cap h2 small{display:block;font-family:var(--f-text);font-size:12px;letter-spacing:.14em;color:var(--ink-soft);font-weight:400;margin-top:4px;font-variant-numeric:tabular-nums}
-.cap .txt{display:grid;gap:6px;min-width:0;width:fit-content;max-width:100%;text-align:left}
-.cap p{margin:0;max-width:34em;font-size:17px;line-height:1.9}
-.cap p.how{color:var(--ink-soft);font-size:15px}
+.cap{align-items:start;padding-top:10px}
+.cap h2{margin:0;justify-self:end;text-align:right;font-family:var(--f-mincho);font-weight:500;font-size:clamp(22px,2.2vw,30px);line-height:1.35;letter-spacing:.03em;text-wrap:balance}
+html[data-lang="en"] .cap h2{font-family:var(--f-mincho)}
+.cap h2 small{display:block;font-family:var(--f-en);font-size:17px;letter-spacing:.04em;color:var(--ink-soft);font-weight:400;margin-top:6px;font-variant-numeric:lining-nums}
+.cap .txt{display:grid;gap:6px;min-width:0}
+.cap p{margin:0;max-width:34em;font-family:var(--f-prose);font-size:17px;line-height:1.95}
+html[data-lang="en"] .cap p{font-size:19px;line-height:1.55}
+.cap p.how{color:var(--ink-soft);font-size:15px;font-family:var(--f-ui)}
+@media (max-width:999px){.cap h2{justify-self:start;text-align:left;padding-bottom:0}.cap{row-gap:0}.cap .txt{padding-top:12px}}
 @media (max-width:720px){.stage{height:70vh}}
-.lang{display:flex;gap:4px}
-.lang button{font:inherit;font-size:13px;letter-spacing:.14em;color:var(--ink-soft);background:none;border:0;padding:6px 8px;cursor:pointer}
-.lang button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
-.lang button:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
-[data-l]{display:none}
-html[data-lang="ja"] [data-l="ja"], html[data-lang="en"] [data-l="en"], html[data-lang="zh"] [data-l="zh"]{display:revert}
-html[data-lang="zh"]{--f-display:"Noto Serif SC","Songti SC","SimSun",serif;--f-text:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <a class="mark" href="home.html" aria-label="D.sign"><span class="kd">D</span><span class="kp">.</span>sign</a>
-    <span class="line">Images about looking and the trouble with wanting.</span>
-    <nav class="lang" aria-label="言語 / Language / 语言">
-      <button type="button" id="l-ja" data-set="ja" aria-pressed="true">日本語</button>
-      <button type="button" id="l-en" data-set="en" aria-pressed="false">English</button>
-      <button type="button" id="l-zh" data-set="zh" aria-pressed="false" lang="zh-Hans">中文</button>
-    </nav>
-  </header>
-  <section class="period">
-    <h1>2021–2023</h1>
-    <p data-l="ja">UVインクジェットで「絵画」を作る。帯と着物に刷る。コロナ禍で、高級な着物や帯がリサイクルショップに大量に出ていた。</p>
-    <p data-l="en" lang="en">"Paintings" made with UV inkjet, printed on obi and kimono. During the pandemic, fine kimono and obi were flooding into secondhand shops.</p>
-    <p data-l="zh" lang="zh-Hans">用UV喷墨制作“绘画”，印在腰带与和服上。疫情期间，大量高级和服与腰带流入了二手店。</p>
-    <p class="note" data-l="ja">カーソルを左右に動かすと立つ位置が変わります（スマホは横にスワイプ）。クリックで近づき、もう一度クリックで次の細部、最後に離れます。</p>
-    <p class="note" data-l="en" lang="en">Move the pointer left and right to change where you stand (swipe sideways on a phone). Click to walk up close, click again for the next detail, and once more to step back.</p>
-    <p class="note" data-l="zh" lang="zh-Hans">左右移动光标，改变你站立的位置（手机上左右滑动）。点击走近，再次点击看下一处细部，最后一次点击后退。</p>
+<div class="band" aria-hidden="true"></div>
+<div class="page">
+
+<header class="site-head split">
+  <a class="mark" href="home.html" aria-label="D.sign"><span class="kd">D</span><span class="kp">.</span>sign</a>
+  <div class="lang" role="group" aria-label="言語 / Language / 语言">
+    <button type="button" data-set="ja" aria-pressed="true" aria-label="日本語"><span class="full">日本語</span><span class="short" aria-hidden="true">日</span></button>
+    <button type="button" data-set="en" aria-pressed="false" aria-label="English" lang="en"><span class="full">English</span><span class="short" aria-hidden="true">EN</span></button>
+    <button type="button" data-set="zh" aria-pressed="false" aria-label="中文" lang="zh-Hans"><span class="full">中文</span><span class="short" aria-hidden="true">中</span></button>
+  </div>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="when-closed"><span data-l="ja">メニュー</span><span data-l="en" lang="en">Menu</span><span data-l="zh" lang="zh-Hans">菜单</span></span><span class="when-open"><span data-l="ja">閉じる</span><span data-l="en" lang="en">Close</span><span data-l="zh" lang="zh-Hans">关闭</span></span></button>
+  <nav class="site-nav" id="site-nav" aria-label="サイト / Site / 网站">
+    <ul class="works">
+      <li><a href="torso/">TORSO</a></li>
+      <li><a href="2021-2023.html" aria-current="page">2021–2023</a></li>
+      <li><a href="https://byveyren.com" class="ext" target="_blank" rel="noopener">Three Views</a></li>
+      <li><a href="sound.html">Submerged Room</a></li>
+    </ul>
+    <ul class="words">
+      <li><a href="beginnings.html"><span data-l="ja">はじまり</span><span data-l="en" lang="en">Beginnings</span><span data-l="zh" lang="zh-Hans">缘起</span></a></li>
+      <li><a href="record.html"><span data-l="ja">記録</span><span data-l="en" lang="en">Record</span><span data-l="zh" lang="zh-Hans">记录</span></a></li>
+      <li><a href="prints.html"><span data-l="ja">欲しい人へ</span><span data-l="en" lang="en">If you want one</span><span data-l="zh" lang="zh-Hans">致想要的人</span></a></li>
+      <li><a href="cv.html"><span data-l="ja">略歴</span><span data-l="en" lang="en">CV</span><span data-l="zh" lang="zh-Hans">简历</span></a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="split period">
+    <h1 class="l sheet">2021–2023</h1>
+    <div class="r sheet">
+      <p data-l="ja">UVインクジェットで「絵画」を作る。帯と着物に刷る。コロナ禍で、高級な着物や帯がリサイクルショップに大量に出ていた。</p>
+      <p data-l="en" lang="en">"Paintings" made with UV inkjet, printed on obi and kimono. During the pandemic, fine kimono and obi were flooding into secondhand shops.</p>
+      <p data-l="zh" lang="zh-Hans">用UV喷墨制作“绘画”，印在腰带与和服上。疫情期间，大量高级和服与腰带流入了二手店。</p>
+      <p class="note" data-l="ja">カーソルを左右に動かすと立つ位置が変わります（スマホは横にスワイプ）。クリックで近づき、もう一度クリックで次の細部、最後に離れます。</p>
+      <p class="note" data-l="en" lang="en">Move the pointer left and right to change where you stand (swipe sideways on a phone). Click to walk up close, click again for the next detail, and once more to step back.</p>
+      <p class="note" data-l="zh" lang="zh-Hans">左右移动光标，改变你站立的位置（手机上左右滑动）。点击走近，再次点击看下一处细部，最后一次点击后退。</p>
+    </div>
   </section>
-  <main id="works"></main>
+  <div id="works"></div>
+</main>
+
+<footer class="site-foot split sheet">
+  <div class="l"><p class="who">杉山 大介<span>Daisuke Sugiyama</span></p></div>
+  <div class="r">
+    <ul>
+      <li><a href="mailto:contact@dsign.art">contact@dsign.art</a></li>
+      <li><a href="https://www.instagram.com/dsign_art_/" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://x.com/dsign_art_" target="_blank" rel="noopener">X</a></li>
+      <li><a href="cv.html"><span data-l="ja">略歴</span><span data-l="en" lang="en">CV</span><span data-l="zh" lang="zh-Hans">简历</span></a></li>
+    </ul>
+    <p>© D.sign</p>
+  </div>
+</footer>
 </div>
+
 
 <script>
 const TR = {"sorewa": [["Velveteen with a fukuro-obi laid on it; the whole was scanned, then printed without covering all of the obi's pattern. The phoenix and flowers belong to the obi."], ["在平绒上贴上袋带，整体扫描后，不完全覆盖腰带的花纹进行印刷。凤凰与花是腰带本身的图案。"]], "tsunagari": [["A fukuro-obi laid on velveteen, almost buried under the print. The image on the verge of disappearing is intended."], ["在平绒上贴上袋带，几乎被印刷完全覆盖。图像近乎消失，是有意为之。"]], "nagare": [["A fukuro-obi laid on velveteen, almost buried under the print. The image on the verge of disappearing is intended."], ["在平绒上贴上袋带，几乎被印刷完全覆盖。图像近乎消失，是有意为之。"]], "dap": [["A whole Oshima-tsumugi kimono laid on a velvet-covered panel and printed directly with UV inkjet. The frame is part of the work.", "THE STRENGTH, THE FOOL, THE DEATH and THE HUNGED, joined and recomposed. Scenes and figures built in 3DCG, brushwork added in Corel Painter, composited in Photoshop. People in the society of 2022, each living clumsily in their own way."], ["将一整件大岛绸和服贴在覆有天鹅绒的板上，用UV喷墨直接印刷。连同画框在内是一件作品。", "将 THE STRENGTH／THE FOOL／THE DEATH／THE HUNGED 四张连接并重新构成。以3DCG搭建场景与人物，用Corel Painter加入笔触，在Photoshop中合成。2022年的社会里，各自笨拙地活着的人们。"]], "raijin-fujin": [["RAIJIN and FUJIN, two works that together make KORIN. Printed on real obi."], ["RAIJIN 与 FUJIN 两件构成 KORIN。印在真正的腰带上。"]], "street": [["An acrylic box. The real obi is at the back and can be seen only from the side."], ["亚克力盒。真正的腰带在深处，只能从侧面看见。"]], "sp1": [["A painting in oils on obi, 3D-scanned and processed digitally. The black shape is a selfie. The hand-painted picture itself is not shown."], ["用油画颜料画在腰带上的画被立体扫描，并经过数字处理。黑色的形状是自拍照。手绘的画本身不展出。"]], "sp2": [["Obi 3D-scanned and recolored, with a 3D figure placed on it. Nothing real is there, yet it looks like obi."], ["将腰带立体扫描并改变颜色，再放上3D人物。没有真物，却看起来像腰带。"]], "kaze": [["The real obi is at the back, seen through a hole cut in the paper, behind acrylic."], ["真正的腰带在深处，透过纸上挖开的孔，隔着亚克力可以看见。"]], "nagamu": [["The real obi is at the back, seen through a hole cut in the paper, behind acrylic."], ["真正的腰带在深处，透过纸上挖开的孔，隔着亚克力可以看见。"]]};
@@ -193,9 +219,9 @@ const WORKS = [
       walk.append(endLabel(0), range, endLabel(1));
       sec.append(walk);
     }
-    const cap = el('div','cap');
-    const h2 = el('h2',null); h2.textContent = W.title; const sm = el('small'); sm.textContent = W.year; h2.append(sm);
-    const txt = el('div','txt');
+    const cap = el('div','split cap');
+    const h2 = el('h2','l sheet'); h2.textContent = W.title; const sm = el('small'); sm.textContent = W.year; h2.append(sm);
+    const txt = el('div','txt r sheet');
     const langs = {ja:W.text, en:(TR[W.id]||[[],[]])[0], zh:(TR[W.id]||[[],[]])[1]};
     for (const [l, arr] of Object.entries(langs)) arr.forEach((t,i) => { const p = el('p', i ? 'how' : null); p.dataset.l = l; if (l !== 'ja') p.lang = l === 'zh' ? 'zh-Hans' : 'en'; p.textContent = t; txt.append(p); });
     cap.append(h2, txt); sec.append(cap);
@@ -332,23 +358,10 @@ const WORKS = [
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+  // links like 2021-2023.html#nagamu: the sections are built here, so go to them now
+  if (location.hash) { const t = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (t) setTimeout(() => t.scrollIntoView({block:'start'}), 60); }
 })();
 </script>
-<script>
-(() => {
-  const root = document.documentElement;
-  let stored = null;
-  try { stored = localStorage.getItem('dsign-lang'); } catch(e) {}
-  const nav = (navigator.language || 'ja').toLowerCase();
-  const lang = ['ja','en','zh'].includes(stored) ? stored : (nav.startsWith('ja') ? 'ja' : nav.startsWith('zh') ? 'zh' : 'en');
-  const set = l => {
-    root.dataset.lang = l; root.lang = l === 'zh' ? 'zh-Hans' : l;
-    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.set === l)));
-    try { localStorage.setItem('dsign-lang', l); } catch(e) {}
-  };
-  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => set(b.dataset.set)));
-  set(lang);
-})();
-</script>
+<script src="js/site.js"></script>
 </body>
 </html>
