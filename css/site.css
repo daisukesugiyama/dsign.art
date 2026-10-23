@@ -12,8 +12,8 @@
   --kihada:#e6d39d;       /* 淡い黄色 */
   --fuji:#b59cb6;         /* 藤色 */
   --seiheki:#1f6a7c;      /* 青緑 links and focus */
-  --band-x:39.6vw;        /* where the band stands in the work */
-  --band-w:9.6vw;
+  --band-x:39.6%;         /* where the band stands in the work (of the page width, scrollbar excluded) */
+  --band-w:9.6%;
   /* the wall */
   --wall:#ebe9e6;
   --ink:#24211d;
