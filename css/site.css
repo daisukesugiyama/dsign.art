@@ -69,7 +69,15 @@ html:not([data-lang]) [data-l]:not([data-l="ja"]){display:none!important}
 
 /* ---------- header ---------- */
 /* one line on every screen: the name, the language, the menu. Where to go is all in the menu. */
-.site-head{position:relative;z-index:5;padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:28px;align-items:baseline}
+.site-head{position:sticky;z-index:5;top:calc(-1 * var(--head-h,96px) - 2px);padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:28px;align-items:baseline;
+  transition:top .38s cubic-bezier(.2,.7,.2,1)}
+/* far down a page, scrolling a little way back up brings the line back, quietly, as a strip of the
+   same paper with the band running through it; going on down puts it away again (site.js) */
+.site-head.is-back{top:0;background:var(--wall) url(../img/washi.jpg) 0 0/768px repeat;background-blend-mode:overlay;
+  box-shadow:0 1px 0 rgba(36,33,29,.07),0 12px 24px -20px rgba(36,33,29,.4)}
+.site-head.is-back.is-hiding{top:calc(-1 * var(--head-h,96px) - 2px)}
+.site-head.is-back::before{content:"";position:absolute;top:0;bottom:0;left:var(--band-x);width:var(--band-w);z-index:-1;pointer-events:none;
+  background:var(--shu) url(../img/washi.jpg) 0 0/768px repeat;background-blend-mode:soft-light}
 .site-head > .mark{grid-column:left;grid-row:1;justify-self:start}
 .site-head > .lang{grid-column:right;grid-row:1;justify-self:start}
 .site-head > .menu-toggle{grid-column:right;grid-row:1;justify-self:end}
