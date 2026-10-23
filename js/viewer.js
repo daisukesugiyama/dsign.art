@@ -89,12 +89,14 @@
 
   // on the page, fingers that try to move the work get told where that happens
   const isTouch = e => (e.pointerType || (e.originalEvent && e.originalEvent.pointerType)) === 'touch';
-  v.addHandler('canvas-click', e => { if (!isFull() && isTouch(e) && e.quick) flashHint('touch'); });
+  // a tap on the picture opens it to the full screen
+  v.addHandler('canvas-click', e => { if (!isFull() && isTouch(e) && e.quick) enterFull(); });
   let draggedHint = false;
   v.addHandler('canvas-drag', e => { if (!isFull() && isTouch(e) && !draggedHint) { draggedHint = true; flashHint('touch'); } });
   v.addHandler('canvas-release', () => { draggedHint = false; });
 
-  // two fingers on the page: a closer look, then back to the whole once they are lifted
+  // two fingers on the page: spreading them opens the picture to the full screen, at the place
+  // and the closeness the fingers chose; a small or backward pinch just settles back
   const down = new Set();
   let settleTimer = 0, pinched = false;
   addEventListener('pointerdown', e => {
@@ -115,10 +117,10 @@
     pinched = false;
     if (!was || isFull()) return;
     settleTimer = setTimeout(() => {
-      if (isFull() || down.size || !awayFromWhole()) return;
-      vp().goHome();
-      flashHint('touch');
-    }, 260);
+      if (isFull() || down.size) return;
+      if (vp().getZoom(true) / vp().getHomeZoom() > 1.12) enterFullHere();
+      else if (awayFromWhole()) vp().goHome();
+    }, 160);
   };
   addEventListener('pointerup', lift, true);
   addEventListener('pointercancel', lift, true);
@@ -181,6 +183,14 @@
     setTimeout(tick, 60);
   };
   const closeFull = () => { if (pushed) history.back(); else exitFull(); };
+  // into the full screen without losing the place: the same point, the same closeness
+  const enterFullHere = () => {
+    const c = vp().getCenter(true), z = imageZoom();
+    enterFull();
+    const put = () => { vp().panTo(c, true); vp().zoomTo(vp().imageToViewportZoom(z), null, true); vp().applyConstraints(true); tick(); };
+    v.addOnceHandler('resize', () => setTimeout(put, 0));
+    setTimeout(put, 120);
+  };
   addEventListener('popstate', () => { if (isFull()) { pushed = false; exitFull(); } });
   document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && isFull()) closeFull(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && isFull()) closeFull(); });

@@ -174,8 +174,13 @@ html[data-lang="en"] .title{font-family:var(--f-en);letter-spacing:.01em;font-si
 .viewer-hint[data-for="touch"] .for-wheel,.viewer-hint:not([data-for="touch"]) .for-touch{display:none}
 .viewer-how .for-touch,.work-view.is-touch .viewer-how .for-mouse{display:none}
 .work-view.is-touch .viewer-how .for-touch{display:inline}
-/* fingers: on the page there is only "fill the screen"; once it fills, everything */
-.work-view.is-touch:not(.is-full) .controls button:not([data-act="screen"]){display:none}
+/* fingers: on the page the picture itself (or the button on its corner) opens it to the full screen;
+   the controls come with it there */
+.work-view.is-touch:not(.is-full) .controls{display:none}
+.viewer-open{display:none}
+.work-view.is-touch:not(.is-full) .viewer-open{display:flex;align-items:center;gap:8px;position:absolute;z-index:3;
+  top:12px;right:calc(12px + env(safe-area-inset-right,0px));height:40px;padding:0 15px 0 13px;border:1px solid var(--rule);border-radius:20px;
+  background:rgba(235,233,230,.92);color:var(--ink);font:13px/1 var(--f-ui);letter-spacing:.06em;cursor:pointer;box-shadow:0 1px 6px rgba(36,33,29,.12)}
 .viewer-close{display:none}
 .work-view.is-full .viewer-close{display:block;position:absolute;z-index:4;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));
   width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgba(235,233,230,.88);color:var(--ink);font:300 26px/44px var(--f-ui);cursor:pointer;
