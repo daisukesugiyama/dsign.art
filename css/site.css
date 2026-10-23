@@ -37,6 +37,9 @@ html[data-lang="zh"]{--f-prose:"Noto Serif SC","Songti SC","SimSun",serif;--f-ui
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:24px;
   touch-action:pan-x pan-y}  /* the page never zooms (pinch, double tap): it is laid out like the work; coming closer happens in the work */
+/* iOS Safari lets a pinch through while the page is still gliding after a flick. If it did zoom,
+   site.js marks the page and lets go, so it can be pinched (or double-tapped) back; at 1× it locks again */
+html.is-zoomed{touch-action:auto}
 body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.8;
   background:var(--wall) url(../img/washi.jpg) 0 0/768px repeat;background-blend-mode:overlay;
   font-kerning:normal;-webkit-font-smoothing:antialiased}

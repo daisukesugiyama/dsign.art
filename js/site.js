@@ -22,8 +22,27 @@
 
   // the page itself never zooms: it is laid out like the work, and coming closer happens in
   // the work. CSS (touch-action) stops pinch and double-tap zoom; iOS Safari also needs this.
+  // One gap is left that no page can close: while the page is still gliding after a flick, iOS
+  // Safari keeps the fingers to itself (a WebKit bug), so a pinch right then zooms the page.
+  // If that happens, the page is marked html.is-zoomed and nothing holds the fingers back, so it
+  // can be pinched or double-tapped back to 1×; there it locks again.
+  const vv = window.visualViewport;
+  let zoomed = false;
+  const syncZoom = () => {
+    const z = !!vv && vv.scale > 1.01;
+    if (z === zoomed) return;
+    zoomed = z;
+    root.classList.toggle('is-zoomed', z);
+    document.dispatchEvent(new CustomEvent('dsign:zoom', { detail: z }));
+  };
+  if (vv) {
+    vv.addEventListener('resize', syncZoom);
+    vv.addEventListener('scroll', syncZoom);
+    addEventListener('pageshow', syncZoom);
+    syncZoom();
+  }
   if ('ongesturestart' in window) {
-    const stop = e => e.preventDefault();
+    const stop = e => { if (!zoomed) e.preventDefault(); };
     document.addEventListener('gesturestart', stop, { passive: false });
     document.addEventListener('gesturechange', stop, { passive: false });
     let last = 0, lx = 0, ly = 0;
@@ -31,18 +50,19 @@
       const t = e.changedTouches[0];
       if (!t) return;
       const quick = e.timeStamp - last < 350 && Math.hypot(t.clientX - lx, t.clientY - ly) < 40;
-      if (quick && !e.target.closest('a,button,input,textarea,select,label,.openseadragon-container,.stage')) e.preventDefault();
+      if (quick && !zoomed && !e.target.closest('a,button,input,textarea,select,label,.openseadragon-container,.stage')) e.preventDefault();
       last = e.timeStamp; lx = t.clientX; ly = t.clientY;
     }, { passive: false });
   }
 
   // two fingers on a picture: a closer look for a moment; it settles back when they are lifted
+  // (not while the page is zoomed: then two fingers are for pinching the page back)
   document.querySelectorAll('[data-peek]').forEach(img => {
     let g = null;
     const mid = (a, b) => [(a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2];
     const gap = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
     img.addEventListener('touchstart', e => {
-      if (e.touches.length !== 2) return;
+      if (e.touches.length !== 2 || zoomed) return;
       e.preventDefault();
       const [a, b] = e.touches, r = img.getBoundingClientRect(), m = mid(a, b);
       g = { d: gap(a, b) || 1, m };

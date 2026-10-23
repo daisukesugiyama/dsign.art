@@ -81,11 +81,14 @@
   });
 
   // touch-action: on the page a finger scrolls it up and down (and nothing else);
-  // filling the screen gives every gesture to the work
+  // filling the screen gives every gesture to the work. If iOS let the page itself get zoomed
+  // (see site.js), the fingers go back to the browser here too, so the page can be pinched back.
+  const pageZoomed = () => document.documentElement.classList.contains('is-zoomed');
   const setTouch = () => {
-    const ta = isFull() ? 'none' : 'pan-y';
+    const ta = isFull() ? 'none' : pageZoomed() ? 'auto' : 'pan-y';
     if (v.canvas.style.touchAction !== ta) { v.canvas.style.touchAction = ta; v.container.style.touchAction = ta; }
   };
+  document.addEventListener('dsign:zoom', setTouch);
 
   // on the page, fingers that try to move the work get told where that happens
   const isTouch = e => (e.pointerType || (e.originalEvent && e.originalEvent.pointerType)) === 'touch';

@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script>(()=>{const L=['ja','en','zh'],r=document.documentElement;let s=null;try{s=localStorage.getItem('dsign-lang')}catch(e){}const q=new URLSearchParams(location.search).get('lang');const n=(navigator.language||'ja').toLowerCase();const l=L.includes(q)?q:L.includes(s)?s:n.startsWith('ja')?'ja':n.startsWith('zh')?'zh':'en';r.dataset.lang=l;r.lang=l==='zh'?'zh-Hans':l;if(L.includes(q)){try{localStorage.setItem('dsign-lang',q)}catch(e){}}})();</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&family=Noto+Serif+SC:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/site.css?v=20261023b">
+<link rel="stylesheet" href="css/site.css?v=20261023c">
 <style>
 /* Layout: the page is the gallery wall. Each work hangs on its own stretch of wall.
    Moving the pointer left changes where you stand (front → side, near → far, four → one).
@@ -42,6 +42,7 @@ html[data-lang="en"] .period .r p{font-size:20px;line-height:1.55}
 .work{display:grid;gap:16px}
 .stage{position:relative;height:min(82vh,960px);min-height:420px;background:var(--wall-w,var(--wall));
   overflow:hidden;touch-action:pan-y;transition:background-color .4s;cursor:default}
+html.is-zoomed .stage{touch-action:auto}  /* the page got zoomed anyway (see site.js): fingers go to pinching it back */
 .stage.c-walk{cursor:ew-resize}
 .stage.c-in{cursor:zoom-in}
 .stage.c-out{cursor:zoom-out}
@@ -374,6 +375,6 @@ const WORKS = [
   if (location.hash) { const t = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (t) setTimeout(() => t.scrollIntoView({block:'start'}), 60); }
 })();
 </script>
-<script src="js/site.js?v=20261023b"></script>
+<script src="js/site.js?v=20261023c"></script>
 </body>
 </html>
