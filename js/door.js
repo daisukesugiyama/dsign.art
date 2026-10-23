@@ -67,7 +67,14 @@
     for (let x = 0; x < n.x; x++) for (let y = 0; y < n.y; y++) { const i = new Image(); i.src = src.getTileUrl(level, x, y); }
   };
 
-  v.addOnceHandler('open', () => {
+  // some in-app browsers open the page before it has a size; wait for one before measuring
+  const stage = el.querySelector('.door-stage');
+  v.addOnceHandler('open', function begin() {
+    const r = stage.getBoundingClientRect(), cs = v.viewport.getContainerSize();
+    if (!(r.width > 0 && r.height > 0 && cs.x > 0 && cs.y > 0)) { setTimeout(begin, 100); return; }
+    start();
+  });
+  function start() {
     const vp = v.viewport, item = v.world.getItemAt(0);
     vp.fitBounds(endView(vp), true);
     const endZ = vp.getZoom();
@@ -92,7 +99,7 @@
     item.addHandler('fully-loaded-change', e => { if (e.fullyLoaded) go(); });
     setTimeout(go, 4500);
     preload(item, endZ);
-  });
+  }
   v.addHandler('open-failed', () => { el.classList.add('is-static'); done(); });
 
   addEventListener('resize', () => {
