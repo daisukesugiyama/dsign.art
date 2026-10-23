@@ -72,9 +72,12 @@ html:not([data-lang]) [data-l]:not([data-l="ja"]){display:none!important}
 .site-head > .menu-toggle{grid-column:right;grid-row:1;justify-self:end}
 .mark{font-family:var(--f-mark);font-weight:500;font-size:28px;line-height:1;letter-spacing:.02em;color:var(--ink);text-decoration:none}
 .mark .kd{margin-right:-.09em}.mark .kp{margin-right:-.04em}
-/* works on the first line, words on the second */
+/* works on the first line; about D.sign and the way to have one on the second.
+   In the menu on small screens each group gets its heading and each name a few words. */
 .site-nav{display:grid;gap:2px}
+.site-nav .row2{display:flex;flex-wrap:wrap;gap:2px 24px}
 .site-nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:2px 24px}
+.site-nav .group-h,.site-nav .desc{display:none}
 .site-nav a{font-size:14px;line-height:1.9;letter-spacing:.06em;text-decoration:none;color:var(--ink);
   background:linear-gradient(var(--ink),var(--ink)) 0 92%/0 1px no-repeat;transition:background-size .35s}
 .site-nav .works a{font-family:var(--f-en);font-size:17px;letter-spacing:.03em}
@@ -133,10 +136,15 @@ html[data-lang="en"] .title{font-family:var(--f-en);letter-spacing:.01em;font-si
   .site-nav{position:fixed;inset:0;z-index:20;background:var(--wall) url(../img/washi.jpg) 0 0/768px repeat;background-blend-mode:overlay;
     padding:calc(84px + env(safe-area-inset-top,0px)) var(--margin) 40px;display:none;overflow:auto}
   .site-nav[data-open="true"]{display:block}
-  .site-nav ul{flex-direction:column;gap:6px}
-  .site-nav a{font-family:var(--f-mincho);font-size:26px;letter-spacing:.04em}
+  .site-nav ul{flex-direction:column;gap:14px}
+  .site-nav a{display:block;font-family:var(--f-mincho);font-size:26px;line-height:1.35;letter-spacing:.04em;background:none}
   .site-nav .works a,html[data-lang="en"] .site-nav a{font-family:var(--f-en);font-size:28px;letter-spacing:.02em}
-  .site-nav .words{margin-top:30px}
+  .site-nav a[aria-current="page"]{color:var(--shu-ink);background:none}
+  .site-nav .row2{display:block}
+  .site-nav .about,.site-nav .buy{margin-top:34px}
+  .site-nav .group-h{display:block;margin:0 0 10px;font-family:var(--f-ui);font-size:12px;line-height:1.6;letter-spacing:.18em;color:var(--ink-soft)}
+  .site-nav .desc{display:block;margin-top:3px;font-family:var(--f-ui);font-size:12px;line-height:1.5;letter-spacing:.06em;color:var(--ink-soft)}
+  .site-nav a[aria-current="page"] .desc{color:var(--ink-soft)}
   .menu-toggle[aria-expanded="true"]{position:relative;z-index:30}
   .menu-toggle .when-open{display:none}
   .menu-toggle[aria-expanded="true"] .when-open{display:inline}

@@ -33,6 +33,7 @@
 .entry .r p{margin:0;font-family:var(--f-prose);font-size:18px;line-height:2;letter-spacing:.02em;max-width:34em}
 html[data-lang="en"] .entry .r p{font-size:20px;line-height:1.55;letter-spacing:0;max-width:31em}
 .see{display:inline-block;margin-top:10px;font-size:13px;letter-spacing:.06em}
+.see-note{margin-left:12px;font-size:12px;letter-spacing:.06em;color:var(--ink-soft)}
 @media (max-width:999px){.year{justify-self:start;text-align:left}.entry{row-gap:0}.entry .r{padding-top:0}.entry .l{padding-bottom:6px}}
 </style>
 <script src="js/site.js" defer></script>
@@ -50,18 +51,30 @@ html[data-lang="en"] .entry .r p{font-size:20px;line-height:1.55;letter-spacing:
   </div>
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="when-closed"><span data-l="ja">メニュー</span><span data-l="en" lang="en">Menu</span><span data-l="zh" lang="zh-Hans">菜单</span></span><span class="when-open"><span data-l="ja">閉じる</span><span data-l="en" lang="en">Close</span><span data-l="zh" lang="zh-Hans">关闭</span></span></button>
   <nav class="site-nav" id="site-nav" aria-label="サイト / Site / 网站">
-    <ul class="works">
-      <li><a href="torso/">TORSO</a></li>
-      <li><a href="2021-2023.html">2021–2023</a></li>
-      <li><a href="https://byveyren.com" class="ext" target="_blank" rel="noopener">Three Views</a></li>
-      <li><a href="sound.html">Submerged Room</a></li>
-    </ul>
-    <ul class="words">
-      <li><a href="beginnings.html"><span data-l="ja">はじまり</span><span data-l="en" lang="en">Beginnings</span><span data-l="zh" lang="zh-Hans">缘起</span></a></li>
-      <li><a href="record.html" aria-current="page"><span data-l="ja">記録</span><span data-l="en" lang="en">Record</span><span data-l="zh" lang="zh-Hans">记录</span></a></li>
-      <li><a href="prints.html"><span data-l="ja">欲しい人へ</span><span data-l="en" lang="en">If you want one</span><span data-l="zh" lang="zh-Hans">致想要的人</span></a></li>
-      <li><a href="cv.html"><span data-l="ja">略歴</span><span data-l="en" lang="en">CV</span><span data-l="zh" lang="zh-Hans">简历</span></a></li>
-    </ul>
+    <div class="group works">
+      <p class="group-h"><span data-l="ja">作品</span><span data-l="en" lang="en">Works</span><span data-l="zh" lang="zh-Hans">作品</span></p>
+      <ul>
+        <li><a href="torso/">TORSO<small class="desc"><span data-l="ja">いまのシリーズ</span><span data-l="en" lang="en">Current series</span><span data-l="zh" lang="zh-Hans">现在的系列</span></small></a></li>
+        <li><a href="2021-2023.html">2021–2023<small class="desc"><span data-l="ja">UVインクジェットの「絵画」</span><span data-l="en" lang="en">“Paintings” in UV inkjet</span><span data-l="zh" lang="zh-Hans">UV喷墨的“绘画”</span></small></a></li>
+        <li><a href="sound.html">Submerged Room<small class="desc"><span data-l="ja">音</span><span data-l="en" lang="en">Sound</span><span data-l="zh" lang="zh-Hans">声音</span></small></a></li>
+      </ul>
+    </div>
+    <div class="row2">
+      <div class="group about">
+        <p class="group-h"><span data-l="ja">D.sign について</span><span data-l="en" lang="en">About</span><span data-l="zh" lang="zh-Hans">关于</span></p>
+        <ul>
+          <li><a href="home.html#statement"><span data-l="ja">ステートメント</span><span data-l="en" lang="en">Statement</span><span data-l="zh" lang="zh-Hans">创作自述</span></a></li>
+          <li><a href="beginnings.html"><span data-l="ja">はじまり</span><span data-l="en" lang="en">Beginnings</span><span data-l="zh" lang="zh-Hans">缘起</span><small class="desc"><span data-l="ja">なぜ「見る」なのか</span><span data-l="en" lang="en">Why looking</span><span data-l="zh" lang="zh-Hans">为什么是“看”</span></small></a></li>
+          <li><a href="record.html" aria-current="page"><span data-l="ja">記録</span><span data-l="en" lang="en">Record</span><span data-l="zh" lang="zh-Hans">记录</span><small class="desc"><span data-l="ja">1995年から</span><span data-l="en" lang="en">Since 1995</span><span data-l="zh" lang="zh-Hans">1995年起</span></small></a></li>
+          <li><a href="cv.html"><span data-l="ja">略歴</span><span data-l="en" lang="en">CV</span><span data-l="zh" lang="zh-Hans">简历</span></a></li>
+        </ul>
+      </div>
+      <div class="group buy">
+        <ul>
+          <li><a href="prints.html"><span data-l="ja">欲しい人へ</span><span data-l="en" lang="en">If you want one</span><span data-l="zh" lang="zh-Hans">致想要的人</span><small class="desc"><span data-l="ja">刷る・問い合わせ</span><span data-l="en" lang="en">Prints and enquiries</span><span data-l="zh" lang="zh-Hans">印制与询问</span></small></a></li>
+        </ul>
+      </div>
+    </div>
   </nav>
 </header>
 
@@ -116,7 +129,7 @@ html[data-lang="en"] .entry .r p{font-size:20px;line-height:1.55;letter-spacing:
     <h2 class="l sheet year">2026–</h2>
     <div class="r sheet">
       <p data-l="ja">見る者の位置と条件を言葉で書き、AIに読ませ、人の認知に合わせて像を直す。画面に本物はひとつもない。見る者は人の立てない場所に置かれ、それでも人として見る。像が、見る者の立つ場所を決める。</p><p data-l="en" lang="en">Write the viewer’s position and conditions in words, let AI read them, and correct the image against human cognition. Nothing on the screen is real. The viewer is placed where no person can physically stand, and still looks as a person does. The image decides where the viewer stands.</p><p data-l="zh" lang="zh-Hans">用文字写下观看者的位置与条件，让AI去读，再依照人的认知修正图像。画面中没有一样是真物。观看者被置于人无法实际站立之处，却仍以人的方式观看。像，决定观看者站在哪里。</p>
-      <a class="see link" href="https://byveyren.com" target="_blank" rel="noopener">Three Views</a>
+      <a class="see link" href="https://byveyren.com">Veyren — Three Views</a><span class="see-note"><span data-l="ja">byveyren.com（別のサイト）</span><span data-l="en" lang="en">byveyren.com (another site)</span><span data-l="zh" lang="zh-Hans">byveyren.com（另一个网站）</span></span>
     </div>
   </div>
   <div class="split entry cont">

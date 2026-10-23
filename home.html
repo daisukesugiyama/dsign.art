@@ -38,13 +38,21 @@
 .statement .r{padding-top:8px}
 .sign-off{margin-top:56px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .sig{width:clamp(150px,13vw,200px);height:auto;color:var(--sig)}
-.onward{margin:0;display:flex;gap:28px;font-size:15px;letter-spacing:.06em}
+/* small headings that say what one is reading, and where to go on */
+.sec-h,.sub-h{margin:0 0 14px;font-family:var(--f-ui);font-weight:400;font-size:12px;line-height:1.6;letter-spacing:.18em;color:var(--ink-soft)}
+.statement .sec-h{margin-bottom:22px}
+.onward{margin:0}
+.onward .sec-h{margin-bottom:8px}
+.onward ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.onward li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;font-size:15px;letter-spacing:.06em}
+.onward .desc{font-size:13px;color:var(--ink-soft)}
 
 .series{padding-block:clamp(100px,11vw,170px) 0}
 .series h2{margin:0;font-family:var(--f-mincho);font-weight:400;font-size:17px;letter-spacing:.14em;color:var(--ink-soft)}
 html[data-lang="en"] .series h2{font-family:var(--f-en);font-size:19px;letter-spacing:.04em}
 .series ul{list-style:none;margin:0;padding:0}
 .torso{padding-bottom:56px;border-bottom:1px solid var(--rule);margin-bottom:40px}
+.series .sub-h{margin-bottom:16px}
 .torso a.name{font-family:var(--f-en);font-size:clamp(44px,4.6vw,72px);line-height:1;letter-spacing:.04em;text-decoration:none;color:var(--ink)}
 .torso a.name:hover{color:var(--shu-ink)}
 .torso .yr{font-family:var(--f-en);font-size:19px;color:var(--ink-soft);margin-left:.6em}
@@ -57,12 +65,22 @@ html[data-lang="en"] .torso .prose{font-size:19px}
 .others a:hover img{filter:saturate(1.15) contrast(1.04)}
 .others b{font-family:var(--f-en);font-weight:400;font-size:21px;letter-spacing:.02em;line-height:1.2}
 .others small{display:block;font-size:13px;color:var(--ink-soft);letter-spacing:.06em;margin-top:2px}
+/* another name: said before one leaves for another site */
+.another{padding-top:clamp(72px,8vw,120px)}
+.veyren{display:grid;grid-template-columns:clamp(110px,12vw,160px) minmax(0,1fr);gap:20px;align-items:start;text-decoration:none;color:var(--ink);max-width:40em}
+.veyren img{aspect-ratio:1;object-fit:cover;width:100%}
+.veyren b{display:block;font-family:var(--f-en);font-weight:400;font-size:24px;letter-spacing:.02em;line-height:1.1}
+.veyren .what{display:block;margin-top:10px;font-family:var(--f-prose);font-size:16px;line-height:1.85}
+html[data-lang="en"] .veyren .what{font-size:18px;line-height:1.5}
+.veyren small{display:block;margin-top:8px;font-size:13px;color:var(--ink-soft);letter-spacing:.06em}
+.veyren:hover b{color:var(--shu-ink)}
 @media (max-width:999px){
   .hero img{height:auto}
   .statement{padding-block:72px 32px}
   .one-wrap{position:static}
   .statement{row-gap:56px}
   .others{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .veyren{grid-template-columns:96px minmax(0,1fr);gap:16px}
 }
 </style>
 <script src="js/site.js" defer></script>
@@ -80,18 +98,30 @@ html[data-lang="en"] .torso .prose{font-size:19px}
   </div>
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="when-closed"><span data-l="ja">メニュー</span><span data-l="en">Menu</span><span data-l="zh" lang="zh-Hans">菜单</span></span><span class="when-open"><span data-l="ja">閉じる</span><span data-l="en">Close</span><span data-l="zh" lang="zh-Hans">关闭</span></span></button>
   <nav class="site-nav" id="site-nav" aria-label="サイト / Site / 网站">
-    <ul class="works">
-      <li><a href="torso/">TORSO</a></li>
-      <li><a href="2021-2023.html">2021–2023</a></li>
-      <li><a class="ext" href="https://byveyren.com" target="_blank" rel="noopener">Three Views</a></li>
-      <li><a href="sound.html">Submerged Room</a></li>
-    </ul>
-    <ul class="words">
-      <li><a href="beginnings.html"><span data-l="ja">はじまり</span><span data-l="en">Beginnings</span><span data-l="zh" lang="zh-Hans">缘起</span></a></li>
-      <li><a href="record.html"><span data-l="ja">記録</span><span data-l="en">Record</span><span data-l="zh" lang="zh-Hans">记录</span></a></li>
-      <li><a href="prints.html"><span data-l="ja">欲しい人へ</span><span data-l="en">If you want one</span><span data-l="zh" lang="zh-Hans">致想要的人</span></a></li>
-      <li><a href="cv.html"><span data-l="ja">略歴</span><span data-l="en">CV</span><span data-l="zh" lang="zh-Hans">简历</span></a></li>
-    </ul>
+    <div class="group works">
+      <p class="group-h"><span data-l="ja">作品</span><span data-l="en" lang="en">Works</span><span data-l="zh" lang="zh-Hans">作品</span></p>
+      <ul>
+        <li><a href="torso/">TORSO<small class="desc"><span data-l="ja">いまのシリーズ</span><span data-l="en" lang="en">Current series</span><span data-l="zh" lang="zh-Hans">现在的系列</span></small></a></li>
+        <li><a href="2021-2023.html">2021–2023<small class="desc"><span data-l="ja">UVインクジェットの「絵画」</span><span data-l="en" lang="en">“Paintings” in UV inkjet</span><span data-l="zh" lang="zh-Hans">UV喷墨的“绘画”</span></small></a></li>
+        <li><a href="sound.html">Submerged Room<small class="desc"><span data-l="ja">音</span><span data-l="en" lang="en">Sound</span><span data-l="zh" lang="zh-Hans">声音</span></small></a></li>
+      </ul>
+    </div>
+    <div class="row2">
+      <div class="group about">
+        <p class="group-h"><span data-l="ja">D.sign について</span><span data-l="en" lang="en">About</span><span data-l="zh" lang="zh-Hans">关于</span></p>
+        <ul>
+          <li><a href="home.html#statement"><span data-l="ja">ステートメント</span><span data-l="en" lang="en">Statement</span><span data-l="zh" lang="zh-Hans">创作自述</span></a></li>
+          <li><a href="beginnings.html"><span data-l="ja">はじまり</span><span data-l="en" lang="en">Beginnings</span><span data-l="zh" lang="zh-Hans">缘起</span><small class="desc"><span data-l="ja">なぜ「見る」なのか</span><span data-l="en" lang="en">Why looking</span><span data-l="zh" lang="zh-Hans">为什么是“看”</span></small></a></li>
+          <li><a href="record.html"><span data-l="ja">記録</span><span data-l="en" lang="en">Record</span><span data-l="zh" lang="zh-Hans">记录</span><small class="desc"><span data-l="ja">1995年から</span><span data-l="en" lang="en">Since 1995</span><span data-l="zh" lang="zh-Hans">1995年起</span></small></a></li>
+          <li><a href="cv.html"><span data-l="ja">略歴</span><span data-l="en" lang="en">CV</span><span data-l="zh" lang="zh-Hans">简历</span></a></li>
+        </ul>
+      </div>
+      <div class="group buy">
+        <ul>
+          <li><a href="prints.html"><span data-l="ja">欲しい人へ</span><span data-l="en" lang="en">If you want one</span><span data-l="zh" lang="zh-Hans">致想要的人</span><small class="desc"><span data-l="ja">刷る・問い合わせ</span><span data-l="en" lang="en">Prints and enquiries</span><span data-l="zh" lang="zh-Hans">印制与询问</span></small></a></li>
+        </ul>
+      </div>
+    </div>
   </nav>
 </header>
 
@@ -112,9 +142,10 @@ html[data-lang="en"] .torso .prose{font-size:19px}
     <p class="r"><a class="link" href="torso/001/"><span data-l="ja">原寸で見る</span><span data-l="en">See it at full size</span><span data-l="zh" lang="zh-Hans">以原尺寸观看</span></a></p>
   </div>
 
-  <section class="split statement" aria-label="Statement">
+  <section class="split statement" id="statement" aria-labelledby="statement-h">
     <div class="l sheet">
       <div class="one-wrap">
+        <h2 class="sec-h" id="statement-h"><span data-l="ja">ステートメント</span><span data-l="en" lang="en">Statement</span><span data-l="zh" lang="zh-Hans">创作自述</span></h2>
         <p class="one" lang="en">Images about looking and the trouble with wanting.</p>
         <p class="gloss" data-l="ja">見ることと、欲しがることの厄介さについて。</p>
         <p class="gloss" data-l="zh" lang="zh-Hans">关于观看，以及“想要”的麻烦。</p>
@@ -147,18 +178,22 @@ html[data-lang="en"] .torso .prose{font-size:19px}
       </div>
       <div class="sign-off">
         <img class="sig" src="img/signature-blue.svg" alt="D.sign" width="200" height="138">
-        <p class="onward">
-          <a class="link" href="beginnings.html"><span data-l="ja">はじまり</span><span data-l="en">Beginnings</span><span data-l="zh" lang="zh-Hans">缘起</span></a>
-          <a class="link" href="record.html"><span data-l="ja">記録</span><span data-l="en">Record</span><span data-l="zh" lang="zh-Hans">记录</span></a>
-        </p>
+        <div class="onward">
+          <p class="sec-h"><span data-l="ja">続けて読む</span><span data-l="en" lang="en">Read on</span><span data-l="zh" lang="zh-Hans">继续阅读</span></p>
+          <ul>
+            <li><a class="link" href="beginnings.html"><span data-l="ja">はじまり</span><span data-l="en" lang="en">Beginnings</span><span data-l="zh" lang="zh-Hans">缘起</span></a><span class="desc"><span data-l="ja">なぜ「見る」なのか</span><span data-l="en" lang="en">Why looking</span><span data-l="zh" lang="zh-Hans">为什么是“看”</span></span></li>
+            <li><a class="link" href="record.html"><span data-l="ja">記録</span><span data-l="en" lang="en">Record</span><span data-l="zh" lang="zh-Hans">记录</span></a><span class="desc"><span data-l="ja">1995年から</span><span data-l="en" lang="en">Since 1995</span><span data-l="zh" lang="zh-Hans">1995年起</span></span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="split series" aria-labelledby="series-h">
-    <h2 class="l sheet" id="series-h"><span data-l="ja">いまのシリーズ</span><span data-l="en">Series</span><span data-l="zh" lang="zh-Hans">现在的系列</span></h2>
+    <h2 class="l sheet" id="series-h"><span data-l="ja">作品</span><span data-l="en" lang="en">Works</span><span data-l="zh" lang="zh-Hans">作品</span></h2>
     <div class="r sheet">
       <div class="torso">
+        <p class="sub-h"><span data-l="ja">いまのシリーズ</span><span data-l="en" lang="en">Current series</span><span data-l="zh" lang="zh-Hans">现在的系列</span></p>
         <a class="name" href="torso/">TORSO</a><span class="yr">2026–</span>
         <div class="prose" data-l="ja"><p>トルソーは、服を着せて見せるための、頭のない体。ゴルチエの店には、いつもトルソーがあった。欲望の対象だったものが、いまはただそこに在る。TORSO は、その動かない実在を絵の中に置いていく。</p></div>
         <div class="prose" data-l="en" lang="en"><p>A torso is a headless body for putting clothes on and showing them. In the Gaultier shop there was always a torso. Once an object of desire, it is now simply there. TORSO goes on placing that motionless presence in pictures.</p></div>
@@ -168,11 +203,25 @@ html[data-lang="en"] .torso .prose{font-size:19px}
           <a class="link" href="prints.html"><span data-l="ja">欲しい人へ</span><span data-l="en">If you want one</span><span data-l="zh" lang="zh-Hans">致想要的人</span></a>
         </p>
       </div>
+      <p class="sub-h"><span data-l="ja">これまで</span><span data-l="en" lang="en">Earlier</span><span data-l="zh" lang="zh-Hans">此前</span></p>
       <ul class="others">
         <li><a href="2021-2023.html"><img src="img/thumb-2021-2023.jpg" alt="" width="480" height="480" loading="lazy"><span><b>2021–2023</b><small><span data-l="ja">UVインクジェットの「絵画」</span><span data-l="en">“Paintings” in UV inkjet</span><span data-l="zh" lang="zh-Hans">UV喷墨的“绘画”</span></small></span></a></li>
-        <li><a href="https://byveyren.com" target="_blank" rel="noopener"><img src="img/thumb-three-views.jpg?v=2" alt="" width="480" height="480" loading="lazy"><span><b>Three Views</b><small>Veyren　byveyren.com</small></span></a></li>
         <li><a href="sound.html"><img src="img/thumb-submerged-room.jpg" alt="" width="480" height="480" loading="lazy"><span><b>Submerged Room</b><small><span data-l="ja">音　2026</span><span data-l="en">Sound, 2026</span><span data-l="zh" lang="zh-Hans">声音　2026</span></small></span></a></li>
       </ul>
+    </div>
+  </section>
+
+  <section class="split series another" aria-labelledby="another-h">
+    <h2 class="l sheet" id="another-h"><span data-l="ja">別の名前で</span><span data-l="en" lang="en">Under another name</span><span data-l="zh" lang="zh-Hans">另一个名字</span></h2>
+    <div class="r sheet">
+      <a class="veyren" href="https://byveyren.com">
+        <img src="img/thumb-three-views.jpg?v=2" alt="" width="480" height="480" loading="lazy">
+        <span>
+          <b>Veyren</b>
+          <span class="what"><span data-l="ja">写真のように見える作品は、Veyren という名前で発表している。画面に本物はひとつもない。</span><span data-l="en" lang="en">Works that look like photographs appear under the name Veyren. Nothing on the screen is real.</span><span data-l="zh" lang="zh-Hans">看起来像照片的作品，以 Veyren 之名发表。画面中没有一样是真物。</span></span>
+          <small><span data-l="ja">Three Views ほか　byveyren.com（別のサイト）</span><span data-l="en" lang="en">Three Views and more · byveyren.com (another site)</span><span data-l="zh" lang="zh-Hans">Three Views 等　byveyren.com（另一个网站）</span></small>
+        </span>
+      </a>
     </div>
   </section>
 </main>
