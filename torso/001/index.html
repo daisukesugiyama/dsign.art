@@ -42,13 +42,12 @@ html[data-lang="en"] .part h2{font-family:var(--f-en);font-size:28px;letter-spac
 /* the process is a loop: it keeps coming back to the first image */
 .loop{list-style:none;margin:0;padding:0 0 0 34px;position:relative;counter-reset:s}
 .loop::before{content:"";position:absolute;left:9px;top:14px;bottom:34px;border-left:1px solid var(--shu)}
-.loop li{position:relative;padding:0 0 22px;counter-increment:s}
+.loop li{position:relative;padding:0 0 18px;counter-increment:s}
 .loop li::before{content:counter(s);position:absolute;left:-34px;top:2px;width:19px;height:19px;border-radius:50%;background:var(--wall);border:1px solid var(--shu);
   font-family:var(--f-en);font-size:12px;line-height:18px;text-align:center;color:var(--shu-ink)}
 .loop{max-width:40em}
 .loop .what{font-family:var(--f-prose);font-size:17px;line-height:1.85;display:block}
 html[data-lang="en"] .loop .what{font-size:19px;line-height:1.5}
-.loop .tool{display:block;font-size:12.5px;letter-spacing:.06em;color:var(--ink-soft);margin-top:2px}
 .loop .back{padding:6px 0 0;counter-increment:none;font-size:14px;letter-spacing:.05em;color:var(--shu-ink)}
 .loop .back::before{content:"↺";border:0;background:var(--wall);font-family:var(--f-gothic);font-size:17px;line-height:19px;top:5px;color:var(--shu-ink)}
 .want .printed-line{margin:0 0 18px;display:flex;align-items:baseline;gap:14px}
@@ -121,7 +120,7 @@ html[data-lang="en"] .want .prose{font-size:19px}
   <div class="l sheet">
     <h1 class="work-title">TORSO No.001<span>2026</span></h1>
     <ul class="caption">
-      <li><b><span data-l="ja">素材</span><span data-l="en" lang="en">Medium</span><span data-l="zh" lang="zh-Hans">材料</span></b><span><span data-l="ja">デジタル</span><span data-l="en" lang="en">Digital</span><span data-l="zh" lang="zh-Hans">数字</span>（Midjourney, Boris FX Optics, Rebelle 8, Photoshop）</span></li>
+      <li><b><span data-l="ja">技法</span><span data-l="en" lang="en">Technique</span><span data-l="zh" lang="zh-Hans">技法</span></b><span><span data-l="ja">デジタル</span><span data-l="en" lang="en">Digital</span><span data-l="zh" lang="zh-Hans">数字</span>（Midjourney, Boris FX Optics, Rebelle 8, Photoshop）</span></li>
       <li><b><span data-l="ja">原寸</span><span data-l="en" lang="en">Full size</span><span data-l="zh" lang="zh-Hans">原尺寸</span></b><span>90 × 50.38 cm, 300 dpi</span></li>
       <li><b><span data-l="ja">データ</span><span data-l="en" lang="en">Data</span><span data-l="zh" lang="zh-Hans">数据</span></b><span>10630 × 5950 px</span></li>
       <li><b><span data-l="ja">刷られた回数</span><span data-l="en" lang="en">Printed</span><span data-l="zh" lang="zh-Hans">被印次数</span></b><span>0</span></li>
@@ -155,10 +154,10 @@ html[data-lang="en"] .want .prose{font-size:19px}
   <div class="l sheet"><h2 id="how-h"><span data-l="ja">工程</span><span data-l="en" lang="en">How it is made</span><span data-l="zh" lang="zh-Hans">工序</span></h2></div>
   <div class="r sheet">
     <ol class="loop">
-      <li><span class="what"><span data-l="ja">AIで一枚の画像を作る。</span><span data-l="en" lang="en">Make a single image with AI.</span><span data-l="zh" lang="zh-Hans">用AI做出一张图像。</span></span><span class="tool">Midjourney</span></li>
-      <li><span class="what"><span data-l="ja">画像から、結晶の面のような角ばったかけらを作り、元の画像に重ねる。</span><span data-l="en" lang="en">From the image, make angular fragments like the faces of a crystal, and lay them over the original image.</span><span data-l="zh" lang="zh-Hans">从图像中做出像结晶之面一样棱角分明的碎片，叠在原来的图像上。</span></span><span class="tool">Boris FX Optics</span></li>
-      <li><span class="what"><span data-l="ja">絵具のシミュレーションで水を引き、画面を傾けて、絵具を流す。</span><span data-l="en" lang="en">In a paint simulation, lay down water, tilt the picture, and let the paint flow.</span><span data-l="zh" lang="zh-Hans">用颜料模拟铺水，倾斜画面，让颜料流动。</span></span><span class="tool">Rebelle 8</span></li>
-      <li><span class="what"><span data-l="ja">流れたあとを見て、どこを残すかを決め、また元の画像に重ねる。</span><span data-l="en" lang="en">Look at what the flow has left, decide what to keep, and lay it over the original image again.</span><span data-l="zh" lang="zh-Hans">看着流过的痕迹，决定留下哪里，再叠回原来的图像上。</span></span><span class="tool">Photoshop</span></li>
+      <li><span class="what"><span data-l="ja">AIで一枚の画像を作る。</span><span data-l="en" lang="en">Make a single image with AI.</span><span data-l="zh" lang="zh-Hans">用AI做出一张图像。</span></span></li>
+      <li><span class="what"><span data-l="ja">画像から、結晶の面のような角ばったかけらを作り、元の画像に重ねる。</span><span data-l="en" lang="en">From the image, make angular fragments like the faces of a crystal, and lay them over the original image.</span><span data-l="zh" lang="zh-Hans">从图像中做出像结晶之面一样棱角分明的碎片，叠在原来的图像上。</span></span></li>
+      <li><span class="what"><span data-l="ja">絵具のシミュレーションで水を引き、画面を傾けて、絵具を流す。</span><span data-l="en" lang="en">In a paint simulation, lay down water, tilt the picture, and let the paint flow.</span><span data-l="zh" lang="zh-Hans">用颜料模拟铺水，倾斜画面，让颜料流动。</span></span></li>
+      <li><span class="what"><span data-l="ja">流れたあとを見て、どこを残すかを決め、また元の画像に重ねる。</span><span data-l="en" lang="en">Look at what the flow has left, decide what to keep, and lay it over the original image again.</span><span data-l="zh" lang="zh-Hans">看着流过的痕迹，决定留下哪里，再叠回原来的图像上。</span></span></li>
       <li class="back"><span data-l="ja">何度も、元の画像に戻ってくる。</span><span data-l="en" lang="en">Again and again, back to the original image.</span><span data-l="zh" lang="zh-Hans">一次又一次，回到原来的图像。</span></li>
     </ol>
   </div>
