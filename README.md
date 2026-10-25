@@ -35,5 +35,6 @@ D.sign（杉山 大介）のサイト。静的な HTML だけで動く（GitHub 
 
 1. 原寸の PNG から、タイル（`tiles.dzi`）、`whole-*.jpg`、`spot-*.jpg`、`og.jpg` を作る
 2. `torso/00N/index.html` を 001 にならって作る（寄りの場所は投稿の切り抜きと同じ座標。末尾の Cloudflare の数行も残す）
+   - 「工程」の文は 001 を写さない。その作品で実際にやったことを、前の作品からの変化も含めて書く（道具の名前は書かず、技法の行に書く）。作り方が変わったら、`home.html` の TORSO の段落と `record.html` の TORSO の項も、変わった分を本人の了承で直す
 3. `torso/index.html` の一覧、`home.html` の作品、`record.html`、扉（`index.html` の `data-dzi` `data-tx` `data-ty`）を差し替える
 4. 帯の位置と色を `css/site.css` の `:root` で変える
