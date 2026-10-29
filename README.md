@@ -12,7 +12,7 @@ D.sign（杉山 大介）のサイト。静的な HTML だけで動く（GitHub 
 - スマホ（999px以下）では、ページの一番下まで来ると右下に小さな「↑」（紙の色の丸）が出て、押すとページの一番上へ戻る（`.to-top`、site.js が作る）。戻る途中で見出しの行は出さない。メニューを開いている間は隠す
 - `torso/` TORSO のシリーズ、`torso/001/` No.001（全体から原寸まで寄れるビューア）
 - `2021-2023.html` 2021–2023 の作品、`sound.html` Submerged Room
-- `beginnings.html` はじまり、`record.html` 記録、`prints.html` 欲しい人へ、`keep-looking.html` 見つづけたい人へ（Ko-fi・note・Patreon への入口。希望した人の名前もここに載せる）、`cv.html` 略歴
+- `beginnings.html` はじまり、`record.html` 記録、`prints.html` 欲しい人へ、`keep-looking.html` 見つづけたい人へ（Ko-fi と note への入口。一度だけと海外からの毎月は Ko-fi、日本からの毎月は note。希望した人の名前もここに載せる）、`cv.html` 略歴
 
 ## しくみ
 
