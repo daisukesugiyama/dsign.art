@@ -74,6 +74,7 @@ html.is-zoomed .stage{touch-action:auto}  /* the page got zoomed anyway (see sit
 .cap h2{margin:0;justify-self:end;text-align:right;font-family:var(--f-mincho);font-weight:500;font-size:clamp(22px,2.2vw,30px);line-height:1.35;letter-spacing:.03em;text-wrap:balance}
 html[data-lang="en"] .cap h2{font-family:var(--f-mincho)}
 .cap h2 small{display:block;font-family:var(--f-en);font-size:17px;letter-spacing:.04em;color:var(--ink-soft);font-weight:400;margin-top:6px;font-variant-numeric:lining-nums}
+.cap h2 .jt{display:block;font-size:.82em;letter-spacing:.04em;margin-top:4px;font-feature-settings:"palt"}
 .cap .txt{display:grid;gap:6px;min-width:0}
 .cap p{margin:0;max-width:34em;font-family:var(--f-prose);font-size:17px;line-height:1.95}
 html[data-lang="en"] .cap p{font-size:19px;line-height:1.55}
@@ -186,7 +187,7 @@ const WORKS = [
     spec:[{rows:[['tech', L3('デジタル、UVインクジェット、袋帯、別珍、パネル','Digital, UV inkjet, fukuro-obi, velveteen, panel','数字、UV喷墨、袋带、平绒、木板')],
                  ['size', SAME('81 × 47 cm')]]}],
     front:[{k:'nagare',w:2400,h:1574,d:[{k:'nagare-d1'}]}] },
-  { id:'dap', title:'DEATH AND PEACE', year:'2022', mode:'assemble', ends:['1枚','4枚'],
+  { id:'dap', title:'DEATH AND PEACE', titleJa:'『死と平和』', year:'2022', mode:'assemble', ends:['1枚','4枚'],
     text:['大島紬の着物一着を、ベルベットを貼ったパネルに貼り、UVインクジェットで直接刷る。額も含めて一体の作品。',
           'THE STRENGTH／THE FOOL／THE DEATH／THE HUNGED の4枚をつなげて構成し直した。3DCGでシーンと人物を組み、Corel Painterでタッチを入れ、Photoshopで合成。2022年の社会を、それぞれ不器用に生きる人物。'],
     spec:[{name:L3('THE STRENGTH／THE FOOL／THE DEATH／THE HUNGED','THE STRENGTH / THE FOOL / THE DEATH / THE HUNGED','THE STRENGTH／THE FOOL／THE DEATH／THE HUNGED'),
@@ -270,7 +271,9 @@ const WORKS = [
       sec.append(walk);
     }
     const cap = el('div','split cap');
-    const h2 = el('h2','l sheet'); h2.textContent = W.title; const sm = el('small'); sm.textContent = W.year; h2.append(sm);
+    const h2 = el('h2','l sheet'); h2.textContent = W.title;
+    if (W.titleJa){ const jt = el('span','jt'); jt.dataset.l = 'ja'; jt.textContent = W.titleJa; h2.append(jt); }
+    const sm = el('small'); sm.textContent = W.year; h2.append(sm);
     const txt = el('div','txt r sheet');
     const langs = {ja:W.text, en:(TR[W.id]||[[],[]])[0], zh:(TR[W.id]||[[],[]])[1]};
     for (const [l, arr] of Object.entries(langs)) arr.forEach((t,i) => { const p = el('p', i ? 'how' : null); p.dataset.l = l; if (l !== 'ja') p.lang = l === 'zh' ? 'zh-Hans' : 'en'; p.textContent = t; txt.append(p); });
