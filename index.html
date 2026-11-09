@@ -21,8 +21,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400&family=Noto+Sans+SC:wght@400&display=swap">
 <style>
-/* The door. It opens on the torso at full size and pulls back to the whole work on the wall,
-   the same movement as the reels. A click anywhere goes in. */
+/* The door. TORSO and DRIVER'S SEAT take turns (js/door.js picks one). TORSO opens on the torso at full
+   size and pulls back to the whole work on the wall, the same movement as the reels; DRIVER'S SEAT opens at
+   full size just before the slender tree, slides sideways the way the view goes by while one drives, and
+   pulls back while still moving. The first visit gets either one, every visit after that the other one.
+   A click anywhere goes in. */
 :root{--wall:#ebe9e6;--ink:#24211d;--ink-soft:#6c665e;color-scheme:light}
 html{touch-action:none}  /* the door never zooms or pans; a tap goes in */
 html,body{margin:0;height:100%;background:var(--wall) url(img/washi.jpg) 0 0/768px repeat;background-blend-mode:overlay;color:var(--ink)}
@@ -49,17 +52,25 @@ html[data-lang="ja"] [data-l]:not([data-l="ja"]),html[data-lang="en"] [data-l]:n
 </style>
 </head>
 <body>
-<div class="door" data-door data-dzi="torso/001/tiles.dzi" data-w="10630" data-h="5950" data-tx="1890" data-ty="3150">
+<div class="door" data-door>
   <div class="door-stage" aria-hidden="true"></div>
-  <img class="door-static" src="torso/001/img/whole-2400.jpg" alt="" width="2400" height="1343">
+  <img class="door-static" alt="">
   <a class="enter" href="home.html" aria-label="D.sign に入る / Enter D.sign / 进入 D.sign"></a>
   <span class="mark" aria-hidden="true"><span class="kd">D</span><span class="kp">.</span>sign</span>
-  <p class="label" aria-hidden="true">TORSO No.001<span>2026　90 × 50.38 cm</span></p>
+  <p class="label" aria-hidden="true"></p>
   <p class="go" aria-hidden="true"><span data-l="ja">D.sign に入る</span><span data-l="en">Enter D.sign</span><span data-l="zh" lang="zh-Hans">进入 D.sign</span></p>
   <p class="line" lang="en">Images about looking and the trouble with wanting.</p>
 </div>
 <script src="js/vendor/openseadragon-5.0.1.min.js"></script>
-<script src="js/door.js?v=20261023h"></script>
+<script type="application/json" id="door-works">
+[
+  {"key": "torso", "dzi": "torso/001/tiles.dzi", "w": 10630, "h": 5950, "tx": 1890, "ty": 3150,
+   "still": "torso/001/img/whole-2400.jpg", "sw": 2400, "sh": 1343, "title": "TORSO No.001", "sub": "2026　90\u00a0×\u00a050.38\u00a0cm"},
+  {"key": "ds", "dzi": "drivers-seat/001/tiles.dzi", "w": 19152, "h": 9576, "tx": 10445, "ty": 4470, "move": "glide",
+   "still": "drivers-seat/001/img/whole-2400.jpg", "sw": 2400, "sh": 1200, "title": "DRIVER’S SEAT No.001", "sub": "2026　162.15\u00a0×\u00a081.08\u00a0cm"}
+]
+</script>
+<script src="js/door.js?v=20261109a"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "1cde1b831ff942c08d394e0d74f6e7ad"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
