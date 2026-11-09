@@ -51,14 +51,16 @@
 .series h2{margin:0;font-family:var(--f-mincho);font-weight:400;font-size:17px;letter-spacing:.14em;color:var(--ink-soft)}
 html[data-lang="en"] .series h2{font-family:var(--f-en);font-size:19px;letter-spacing:.04em}
 .series ul{list-style:none;margin:0;padding:0}
-.torso{padding-bottom:56px;border-bottom:1px solid var(--rule);margin-bottom:40px}
+.cur{padding-bottom:44px}
+.cur + .cur{padding-top:44px;border-top:1px solid var(--rule)}
+.cur-go{margin:0 0 40px;padding:28px 0 56px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);font-size:14px;letter-spacing:.06em;display:flex;gap:28px;flex-wrap:wrap}
 .series .sub-h{margin-bottom:16px}
-.torso a.name{font-family:var(--f-en);font-size:clamp(44px,4.6vw,72px);line-height:1;letter-spacing:.04em;text-decoration:none;color:var(--ink)}
-.torso a.name:hover{color:var(--shu-ink)}
-.torso .yr{font-family:var(--f-en);font-size:19px;color:var(--ink-soft);margin-left:.6em}
-.torso .prose{margin-top:22px;font-size:17px}
-html[data-lang="en"] .torso .prose{font-size:19px}
-.torso .go{margin:22px 0 0;font-size:14px;letter-spacing:.06em;display:flex;gap:28px;flex-wrap:wrap}
+.cur a.name{font-family:var(--f-en);font-size:clamp(44px,4.6vw,72px);line-height:1;letter-spacing:.04em;text-decoration:none;color:var(--ink)}
+.cur a.name:hover{color:var(--shu-ink)}
+.cur .yr{font-family:var(--f-en);font-size:19px;color:var(--ink-soft);margin-left:.6em}
+.cur .prose{margin-top:22px;font-size:17px}
+html[data-lang="en"] .cur .prose{font-size:19px}
+.cur .go{margin:22px 0 0;font-size:14px;letter-spacing:.06em;display:flex;gap:28px;flex-wrap:wrap}
 .others{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
 .others a{text-decoration:none;color:var(--ink);display:grid;gap:12px}
 .others img{aspect-ratio:1;object-fit:cover;width:100%;transition:filter .4s}
@@ -101,7 +103,8 @@ html[data-lang="en"] .veyren .what{font-size:18px;line-height:1.5}
     <div class="group works">
       <p class="group-h"><span data-l="ja">作品</span><span data-l="en" lang="en">Works</span><span data-l="zh" lang="zh-Hans">作品</span></p>
       <ul>
-        <li><a href="torso/"><span class="nm">TORSO</span><small class="desc"><span data-l="ja">いまのシリーズ</span><span data-l="en" lang="en">Current series</span><span data-l="zh" lang="zh-Hans">现在的系列</span></small></a></li>
+        <li><a href="torso/"><span class="nm">TORSO</span><small class="desc"><span data-l="ja">トルソーを置いた絵</span><span data-l="en" lang="en">Pictures with a torso</span><span data-l="zh" lang="zh-Hans">放置了人台的画</span></small></a></li>
+        <li><a href="drivers-seat/"><span class="nm">DRIVER’S SEAT</span><small class="desc"><span data-l="ja">運転席から見た景色</span><span data-l="en" lang="en">Views from the driver’s seat</span><span data-l="zh" lang="zh-Hans">从驾驶座看到的景色</span></small></a></li>
         <li><a href="2021-2023.html"><span class="nm">2021–2023</span><small class="desc"><span data-l="ja">UVインクジェットの「絵画」</span><span data-l="en" lang="en">“Paintings” in UV inkjet</span><span data-l="zh" lang="zh-Hans">UV喷墨的“绘画”</span></small></a></li>
         <li><a href="sound.html"><span class="nm">Submerged Room</span><small class="desc"><span data-l="ja">音</span><span data-l="en" lang="en">Sound</span><span data-l="zh" lang="zh-Hans">声音</span></small></a></li>
       </ul>
@@ -192,18 +195,29 @@ html[data-lang="en"] .veyren .what{font-size:18px;line-height:1.5}
   <section class="split series" aria-labelledby="series-h">
     <h2 class="l sheet" id="series-h"><span data-l="ja">作品</span><span data-l="en" lang="en">Works</span><span data-l="zh" lang="zh-Hans">作品</span></h2>
     <div class="r sheet">
-      <div class="torso">
-        <p class="sub-h"><span data-l="ja">いまのシリーズ</span><span data-l="en" lang="en">Current series</span><span data-l="zh" lang="zh-Hans">现在的系列</span></p>
+      <p class="sub-h"><span data-l="ja">いまのシリーズ</span><span data-l="en" lang="en">Current series</span><span data-l="zh" lang="zh-Hans">现在的系列</span></p>
+      <div class="cur">
         <a class="name" href="torso/">TORSO</a><span class="yr">2026–</span>
         <div class="prose" data-l="ja"><p>トルソーは、服を着せて見せるための、頭のない体。ゴルチエの店には、いつもトルソーがあった。欲しかった服を着ていたものが、いまはただそこに在る。TORSO は、その動かない実在を絵の中に置いていく。</p></div>
         <div class="prose" data-l="en" lang="en"><p>A torso is a headless body for putting clothes on and showing them. In the Gaultier shop there was always a torso. It once wore the clothes I wanted; now it is simply there. TORSO goes on placing that motionless presence in pictures.</p></div>
         <div class="prose" data-l="zh" lang="zh-Hans"><p>人台，是为了穿上衣服给人看的、没有头的身体。高缇耶的店里，总立着一个人台。它曾穿着我想要的衣服，如今只是在那里。TORSO，把这种不动的实在，一幅一幅地放进画里。</p></div>
         <p class="go">
           <a class="link" href="torso/001/">TORSO No.001</a>
-          <a class="link" href="prints.html"><span data-l="ja">欲しい人へ</span><span data-l="en">If you want one</span><span data-l="zh" lang="zh-Hans">致想要的人</span></a>
-          <a class="link" href="keep-looking.html"><span data-l="ja">見つづけたい人へ</span><span data-l="en" lang="en">If you want to keep looking</span><span data-l="zh" lang="zh-Hans">致想继续看下去的人</span></a>
         </p>
       </div>
+      <div class="cur">
+        <a class="name" href="drivers-seat/">DRIVER’S SEAT</a><span class="yr">2026–</span>
+        <div class="prose" data-l="ja"><p>自分で運転して見た景色は、覚えている。人の運転で見た景色は、ほとんど覚えていない。後ろの席で覚えているのは、前の座席の背と、自分の手元くらいだ。DRIVER’S SEAT は、運転席から見た景色が頭の中に残していった像を、絵にしていく。</p></div>
+        <div class="prose" data-l="en" lang="en"><p>What I see when I drive, I remember. What I see when someone else drives, I hardly remember at all. From the back seat, I remember the back of the seat in front of me, and my own hands. DRIVER’S SEAT goes on making pictures of what the views from the driver’s seat leave behind in my head.</p></div>
+        <div class="prose" data-l="zh" lang="zh-Hans"><p>自己开车时看到的景色，我记得。别人开车时看到的景色，我几乎不记得。坐在后座时，记得的只有前排座椅的椅背和自己的手。DRIVER’S SEAT，把从驾驶座看到的景色在脑海中留下的影像，一幅一幅地画出来。</p></div>
+        <p class="go">
+          <a class="link" href="drivers-seat/001/">DRIVER’S SEAT No.001</a>
+        </p>
+      </div>
+      <p class="cur-go">
+        <a class="link" href="prints.html"><span data-l="ja">欲しい人へ</span><span data-l="en">If you want one</span><span data-l="zh" lang="zh-Hans">致想要的人</span></a>
+        <a class="link" href="keep-looking.html"><span data-l="ja">見つづけたい人へ</span><span data-l="en" lang="en">If you want to keep looking</span><span data-l="zh" lang="zh-Hans">致想继续看下去的人</span></a>
+      </p>
       <p class="sub-h"><span data-l="ja">これまで</span><span data-l="en" lang="en">Earlier</span><span data-l="zh" lang="zh-Hans">此前</span></p>
       <ul class="others">
         <li><a href="2021-2023.html"><img src="img/thumb-2021-2023.jpg" alt="" width="480" height="480" loading="lazy"><span><b>2021–2023</b><small><span data-l="ja">UVインクジェットの「絵画」</span><span data-l="en">“Paintings” in UV inkjet</span><span data-l="zh" lang="zh-Hans">UV喷墨的“绘画”</span></small></span></a></li>
