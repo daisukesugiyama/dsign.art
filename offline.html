@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>この端末に保存</title>
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<style>
+:root{--paper:#f3efe6;--ink:#1d1b18;--soft:#6b655b;--shu:#c8442c;--line:#d9d2c3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Hiragino Mincho ProN","Yu Mincho",serif;line-height:1.8}
+main{max-width:560px;margin:0 auto;padding:56px 20px 80px}
+h1{font-size:22px;font-weight:500;letter-spacing:.06em;margin:0 0 8px}
+p{margin:0 0 14px;font-size:15px}
+.soft{color:var(--soft);font-size:13px}
+button{font:inherit;font-size:16px;letter-spacing:.08em;padding:14px 22px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:2px;cursor:pointer;width:100%}
+button.sub{background:transparent;color:var(--ink);font-size:13px;padding:10px;margin-top:28px;border-color:var(--line)}
+button:disabled{opacity:.4}
+.bar{height:6px;background:var(--line);margin:22px 0 8px;position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--shu);transition:width .2s}
+#msg{font-size:14px;min-height:1.8em}
+a{color:var(--ink)}
+.go{display:none;margin-top:18px;font-size:16px}
+</style>
+</head>
+<body>
+<main>
+  <h1>この端末に dsign.art を保存</h1>
+  <p>サイトをまるごと（原寸のタイルまで、約 270 MB）この端末に入れます。保存したあとは、電波がなくても同じアドレスでそのまま見られます。</p>
+  <p class="soft">Wi-Fi のある所で押して、終わるまでこの画面を開いたままにしてください（数分）。途中で止まったら、もう一度押せば続きからです。</p>
+  <button id="save">保存する</button>
+  <div class="bar"><i id="fill"></i></div>
+  <div id="msg"></div>
+  <p class="go" id="go"><a href="home.html">→ ホームを開く</a><br><span class="soft">確かめるなら、機内モードにしてからこのリンクを押してください。</span></p>
+  <button class="sub" id="clear">保存した分を消す</button>
+</main>
+<script>
+const CACHE='dsign-offline-v1';
+const FONT_CSS='https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&family=Noto+Serif+SC:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap';
+const $=id=>document.getElementById(id);
+const say=t=>$('msg').textContent=t;
+const mb=b=>(b/1048576).toFixed(0)+' MB';
+
+async function wakeLock(){try{return await navigator.wakeLock.request('screen')}catch(_){return null}}
+
+async function save(){
+  $('save').disabled=true;
+  if(!('serviceWorker' in navigator)||!('caches' in window)){say('このブラウザでは保存できません。');return}
+  await navigator.serviceWorker.register('/sw.js',{scope:'/'});
+  await navigator.serviceWorker.ready;
+  try{await navigator.storage.persist()}catch(_){}
+  const lock=await wakeLock();
+  const c=await caches.open(CACHE);
+  const list=await (await fetch('/offline-files.json',{cache:'reload'})).json();
+  const have=new Set((await c.keys()).map(r=>new URL(r.url).pathname));
+  let done=0,failed=[];const todo=[];
+  for(const [p,b] of list.files){if(have.has(p))done+=b;else todo.push([p,b])}
+  const show=()=>{$('fill').style.width=(done/list.bytes*100).toFixed(1)+'%';say(`保存中… ${mb(done)} / ${mb(list.bytes)}`)};
+  show();
+  let i=0;
+  const worker=async()=>{while(i<todo.length){const [p,b]=todo[i++];
+    try{const r=await fetch(p,{cache:'reload'});if(!r.ok)throw 0;await c.put(location.origin+p,r)}catch(_){failed.push(p)}
+    done+=b;show()}};
+  await Promise.all(Array.from({length:6},worker));
+
+  say('書体を保存中…');
+  try{
+    const res=await fetch(FONT_CSS,{mode:'cors',cache:'reload'});
+    const css=await res.clone().text();
+    await c.put(FONT_CSS,res);
+    const urls=[...new Set(css.match(/https:\/\/fonts\.gstatic\.com\/[^)\s'"]+/g)||[])];
+    let j=0,n=0;
+    const fw=async()=>{while(j<urls.length){const u=urls[j++];
+      try{if(!(await c.match(u))){const r=await fetch(u,{mode:'cors',cache:'reload'});if(r.ok)await c.put(u,r)}}catch(_){}
+      n++;say(`書体を保存中… ${n} / ${urls.length}`)}};
+    await Promise.all(Array.from({length:6},fw));
+  }catch(_){failed.push('書体')}
+
+  if(lock)try{lock.release()}catch(_){}
+  $('save').disabled=false;
+  if(failed.length){say(`保存できなかったものが ${failed.length} 件あります。もう一度「保存する」を押してください。`)}
+  else{$('fill').style.width='100%';say('保存できました。');$('go').style.display='block';$('save').textContent='もう一度確かめる（新しい分だけ足す）'}
+}
+
+async function clearAll(){
+  await caches.delete(CACHE);
+  const regs=await navigator.serviceWorker?.getRegistrations?.()||[];
+  for(const r of regs)await r.unregister();
+  $('fill').style.width='0';$('go').style.display='none';say('消しました。');
+}
+
+$('save').onclick=save;
+$('clear').onclick=()=>{if(confirm('保存した分を消しますか？'))clearAll()};
+
+(async()=>{try{const c=await caches.open(CACHE);const n=(await c.keys()).length;
+  if(n){const l=await (await fetch('/offline-files.json')).json();say(`いま ${n} 件を保存済み（全部で ${l.files.length} 件＋書体）。`)}}catch(_){}})();
+</script>
+</body>
+</html>
