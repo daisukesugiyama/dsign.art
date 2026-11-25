@@ -53,14 +53,15 @@ async function save(){
   const lock=await wakeLock();
   const c=await caches.open(CACHE);
   const list=await (await fetch('/offline-files.json',{cache:'reload'})).json();
-  const have=new Set((await c.keys()).map(r=>new URL(r.url).pathname));
+  const key=p=>new URL(p,location.origin).href; // サイトの分は /… 、原寸のタイルは https://… のまま
+  const have=new Set((await c.keys()).map(r=>r.url));
   let done=0,failed=[];const todo=[];
-  for(const [p,b] of list.files){if(have.has(p))done+=b;else todo.push([p,b])}
+  for(const [p,b] of list.files){if(have.has(key(p)))done+=b;else todo.push([p,b])}
   const show=()=>{$('fill').style.width=(done/list.bytes*100).toFixed(1)+'%';say(`保存中… ${mb(done)} / ${mb(list.bytes)}`)};
   show();
   let i=0;
   const worker=async()=>{while(i<todo.length){const [p,b]=todo[i++];
-    try{const r=await fetch(p,{cache:'reload'});if(!r.ok)throw 0;await c.put(location.origin+p,r)}catch(_){failed.push(p)}
+    try{const ext=/^https?:\/\//.test(p);const r=await fetch(p,ext?{mode:'cors',cache:'reload'}:{cache:'reload'});if(!r.ok)throw 0;await c.put(key(p),r)}catch(_){failed.push(p)}
     done+=b;show()}};
   await Promise.all(Array.from({length:6},worker));
 

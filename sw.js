@@ -4,6 +4,7 @@
    つながるときはいつもどおりネットから読み、つながらないときだけ保存した分を出す。 */
 const CACHE = 'dsign-offline-v1';
 const TIMEOUT = 3500;
+const MEDIA_HOSTS = ['media.dsign.art']; // 原寸のタイルの置き場（別のオリジン）
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
@@ -38,7 +39,8 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   const ours = url.origin === location.origin;
   const font = url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com';
-  if (!ours && !font) return; // 解析の数行などは触らない（電波がなければ失敗するだけ）
+  const media = MEDIA_HOSTS.includes(url.host);
+  if (!ours && !font && !media) return; // 解析の数行などは触らない（電波がなければ失敗するだけ）
   if (url.pathname === '/sw.js') return;
   if (req.cache === 'reload') return; // offline.html の保存は、そのままネットへ
   e.respondWith((async () => {
