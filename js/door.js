@@ -75,6 +75,7 @@
   const v = OSD({
     element: el.querySelector('.door-stage'),
     tileSources: work.dzi,
+    crossOriginPolicy: 'Anonymous',
     showNavigationControl: false,
     showNavigator: false,
     mouseNavEnabled: false,

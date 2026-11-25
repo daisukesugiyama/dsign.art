@@ -35,6 +35,7 @@
   const v = OSD({
     element: stage,
     tileSources: host.dataset.dzi,
+    crossOriginPolicy: 'Anonymous',
     showNavigationControl: false,
     showNavigator: false,
     drawer: 'canvas',
